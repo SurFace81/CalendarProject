@@ -1,0 +1,28 @@
+<UserControl
+    x:Class="CalendarProject.UserControls.CardControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CalendarProject.Views"
+    x:Name="Card"
+    Width="Auto"
+    Height="Auto">
+
+    <UserControl.Resources>
+        <Storyboard x:Name="HighlightAnimation">
+            <ColorAnimation Storyboard.TargetName="cardBorder"
+                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                            To="{ThemeResource SystemAccentColor}" Duration="0:0:0.2" 
+                            AutoReverse="True" RepeatBehavior="1x"/>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border x:Name="cardBorder" CornerRadius="3" BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}" BorderThickness="1" 
+                Background="{ThemeResource ControlFillColorDefault}" Padding="8" Margin="4" PointerPressed="Card_PointerPressed">
+            <Border.Shadow>
+                <ThemeShadow />
+            </Border.Shadow>
+            <TextBlock x:Name="CardTextView" Foreground="{ThemeResource TextFillColorPrimaryBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Border>
+    </Grid>
+</UserControl>
