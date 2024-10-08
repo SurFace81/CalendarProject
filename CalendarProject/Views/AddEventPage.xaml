@@ -7,67 +7,58 @@
     mc:Ignorable="d"
     xmlns:local="using:CalendarProject.Views">
 
-
-    <!-- Добавляем ScrollViewer -->
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <Grid Padding="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <!-- Для даты, времени, приоритета и уведомлений -->
                 <RowDefinition Height="Auto"/>
-                <!-- Для описания -->
                 <RowDefinition Height="Auto"/>
-                <!-- Для кнопки -->
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
-                <!-- Левая колонка для даты и времени -->
                 <ColumnDefinition Width="1*"/>
-                <!-- Правая колонка для приоритета и уведомлений -->
             </Grid.ColumnDefinitions>
 
             <!-- Левая часть: Дата и Время -->
             <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,10,0,0">
-                <TextBlock Text="Event Date" FontSize="18"/>
+                <TextBlock x:Uid="EventDatePicker_tb" FontSize="18"/>
                 <DatePicker x:Name="EventDatePicker" Margin="0,10,0,20"/>
 
-                <TextBlock Text="Event Time" FontSize="18"/>
+                <TextBlock x:Uid="EventTimePicker_tb" FontSize="18"/>
                 <TimePicker x:Name="EventTimePicker" Margin="0,10,0,20"/>
             </StackPanel>
 
             <!-- Правая часть: Приоритет и уведомления -->
             <StackPanel Grid.Row="0" Grid.Column="1" Margin="20,10,0,0">
-                <TextBlock Text="Priority" FontSize="18"/>
+                <TextBlock x:Uid="priority_tb" FontSize="18"/>
                 <ComboBox x:Name="PriorityComboBox" Width="150" Margin="0,10,0,20">
-                    <ComboBoxItem Content="Low"/>
-                    <ComboBoxItem Content="Medium"/>
-                    <ComboBoxItem Content="High"/>
+                    <ComboBoxItem x:Uid="priorityType_Low"/>
+                    <ComboBoxItem x:Uid="priorityType_Medium"/>
+                    <ComboBoxItem x:Uid="priorityType_High"/>
                 </ComboBox>
 
                 <CheckBox x:Name="NotificationCheckBox" Content="Notification" Width="150" Checked="NotificationCheckBox_Checked" Unchecked="NotificationCheckBox_Unchecked" Margin="0,10,0,20"/>
                 <StackPanel x:Name="NotificationTimePanel" Visibility="Collapsed">
-                    <TextBlock Text="Notify in" FontSize="18"/>
+                    <TextBlock x:Uid="notify_tb" FontSize="18"/>
                     <ComboBox x:Name="NotificationTimeComboBox" Width="150" Margin="0,10,0,20">
-                        <ComboBoxItem Content="5 minutes"/>
-                        <ComboBoxItem Content="10 minutes"/>
-                        <ComboBoxItem Content="15 minutes"/>
-                        <ComboBoxItem Content="30 minutes"/>
-                        <ComboBoxItem Content="1 hour"/>
-                        <ComboBoxItem Content="2 hours"/>
-                        <ComboBoxItem Content="1 day"/>
+                        <ComboBoxItem x:Uid="NotifTime_cb1"/>
+                        <ComboBoxItem x:Uid="NotifTime_cb2"/>
+                        <ComboBoxItem x:Uid="NotifTime_cb3"/>
+                        <ComboBoxItem x:Uid="NotifTime_cb4"/>
+                        <ComboBoxItem x:Uid="NotifTime_cb5"/>
+                        <ComboBoxItem x:Uid="NotifTime_cb6"/>
+                        <ComboBoxItem x:Uid="NotifTime_cb7"/>
                     </ComboBox>
                 </StackPanel>
             </StackPanel>
 
-            <!-- Описание на всю ширину -->
             <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="0,20,0,0">
-                <TextBlock Text="Event Description" FontSize="18"/>
-                <TextBox x:Name="EventDescriptionTextBox" PlaceholderText="Enter a description" AcceptsReturn="True" Height="130" TextWrapping="Wrap" Margin="0,10,0,20"/>
+                <TextBlock x:Uid="EventDescription_tb" FontSize="18"/>
+                <TextBox x:Uid="EventDescriptionTextBox" x:Name="EventDescriptionTextBox" AcceptsReturn="True" Height="130" TextWrapping="Wrap" Margin="0,10,0,20"/>
             </StackPanel>
 
-            <!-- Кнопка для сохранения на всю ширину -->
-            <Button Content="Save" Grid.Row="2" Grid.ColumnSpan="2" Width="150" Height="40" HorizontalAlignment="Center" Click="SaveButton_Click" Margin="0,30,0,0"/>
+            <Button x:Uid="EventSave_btn" Grid.Row="2" Grid.ColumnSpan="2" Width="150" Height="40" HorizontalAlignment="Center" Click="SaveButton_Click" Margin="0,30,0,0"/>
         </Grid>
     </ScrollViewer>
 </Page>

@@ -15,7 +15,8 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="UserControls\CardControl.xaml" />
+    <None Remove="UserControls\DayCardControl.xaml" />
+    <None Remove="UserControls\TaskControl.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,7 +44,10 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Page Update="UserControls\CardControl.xaml">
+    <Page Update="UserControls\TaskControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UserControls\DayCardControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

@@ -197,4 +197,55 @@
   <data name="Wednesday_Column.Text" xml:space="preserve">
     <value>Wed</value>
   </data>
+  <data name="EventDatePicker_tb.Text" xml:space="preserve">
+    <value>Event Date</value>
+  </data>
+  <data name="EventDescriptionTextBox.PlaceholderText" xml:space="preserve">
+    <value>Enter a description</value>
+  </data>
+  <data name="EventDescription_tb.Text" xml:space="preserve">
+    <value>Event description</value>
+  </data>
+  <data name="EventSave_btn.Content" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="EventTimePicker_tb.Text" xml:space="preserve">
+    <value>Event Time</value>
+  </data>
+  <data name="NotifTime_cb1.Content" xml:space="preserve">
+    <value>5 minutes</value>
+  </data>
+  <data name="NotifTime_cb2.Content" xml:space="preserve">
+    <value>10 minutes</value>
+  </data>
+  <data name="NotifTime_cb3.Content" xml:space="preserve">
+    <value>15 minutes</value>
+  </data>
+  <data name="NotifTime_cb4.Content" xml:space="preserve">
+    <value>30 minutes</value>
+  </data>
+  <data name="NotifTime_cb5.Content" xml:space="preserve">
+    <value>1 hour</value>
+  </data>
+  <data name="NotifTime_cb6.Content" xml:space="preserve">
+    <value>2 hours</value>
+  </data>
+  <data name="NotifTime_cb7.Content" xml:space="preserve">
+    <value>1 day</value>
+  </data>
+  <data name="notify_tb.Text" xml:space="preserve">
+    <value>Notify in</value>
+  </data>
+  <data name="priorityType_High.Content" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="priorityType_Low.Content" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="priorityType_Medium.Content" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="priority_tb.Text" xml:space="preserve">
+    <value>Priority</value>
+  </data>
 </root>
