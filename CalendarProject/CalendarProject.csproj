@@ -13,6 +13,7 @@
 	<Nullable>enable</Nullable>
 	<UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
+    <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="UserControls\DayCardControl.xaml" />
