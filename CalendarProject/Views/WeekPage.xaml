@@ -8,18 +8,32 @@
     xmlns:local="using:CalendarProject.UserControls">
 
     <Grid x:Name="ContentArea">
-        <!-- Горизонтальная прокрутка -->
-        <ScrollViewer HorizontalScrollMode="Auto" VerticalScrollMode="Auto" HorizontalScrollBarVisibility="Auto">
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,30" Spacing="12" Padding="12">
-                <!-- Карточки дней недели -->
-                <local:DayCardControl DayName="Monday"/>
-                <local:DayCardControl DayName="Tuesday"/>
-                <local:DayCardControl DayName="Wednesday"/>
-                <local:DayCardControl DayName="Thursday"/>
-                <local:DayCardControl DayName="Friday"/>
-                <local:DayCardControl DayName="Saturday"/>
-                <local:DayCardControl DayName="Sunday"/>
+        <TextBlock x:Name="addInfo" Height="30" FontSize="24" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Left"></TextBlock>
+
+        <ScrollViewer Margin="0,30,0,50" HorizontalScrollMode="Auto" VerticalScrollMode="Auto" HorizontalScrollBarVisibility="Auto">
+            <StackPanel x:Name="week_SP" Orientation="Horizontal" Margin="0,0,0,10" Spacing="12" Padding="12">
+                <local:DayCardControl x:Name="day_Mon" DayName="Monday"/>
+                <local:DayCardControl x:Name="day_Tue" DayName="Tuesday"/>
+                <local:DayCardControl x:Name="day_Wed" DayName="Wednesday"/>
+                <local:DayCardControl x:Name="day_Thu" DayName="Thursday"/>
+                <local:DayCardControl x:Name="day_Fri" DayName="Friday"/>
+                <local:DayCardControl x:Name="day_Sat" DayName="Saturday"/>
+                <local:DayCardControl x:Name="day_Sun" DayName="Sunday"/>
             </StackPanel>
         </ScrollViewer>
+
+        <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button Width="100" Height="30" Grid.Column="0" Margin="5" Click="BtnPrev_Click">
+                <FontIcon Glyph="&#xE72B;" FontFamily="Segoe MDL2 Assets" />
+            </Button>
+            <Button Width="100" Height="30" Grid.Column="1" Margin="5" Click="BtnNext_Click">
+                <FontIcon Glyph="&#xE72A;" FontFamily="Segoe MDL2 Assets" />
+            </Button>
+        </Grid>
     </Grid>
 </Page>

@@ -3,15 +3,13 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using CalendarProject.Models;
 using Microsoft.UI.Xaml.Input;
+using System.Collections.ObjectModel;
 
 namespace CalendarProject.UserControls
 {
     public sealed partial class DayCardControl : UserControl
     {
-        public string DayName
-        {
-            get; set;
-        }
+        public string DayName { get; set; }
 
         public DayCardControl()
         {
@@ -27,7 +25,12 @@ namespace CalendarProject.UserControls
 
         }
 
-        private void AddTask(string time, string description)
+        public void ClearTasks()
+        {
+            TasksListView.Items.Clear();
+        }
+
+        public void AddTask(string time, string description)
         {
             TasksListView.Items.Add(new TaskControl
             {
