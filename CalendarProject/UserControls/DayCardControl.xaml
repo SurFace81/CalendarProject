@@ -7,7 +7,7 @@
     xmlns:local="using:CalendarProject.UserControls"
     mc:Ignorable="d"
     x:Name="DayCard"
-    Width="250">
+    Width="300">
 
     <StackPanel CornerRadius="3" BorderThickness="1" BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
                 Background="{ThemeResource ControlFillColorDefault}" Padding="8" Margin="4" PointerPressed="Card_PointerPressed">

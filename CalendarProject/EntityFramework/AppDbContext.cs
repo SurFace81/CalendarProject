@@ -19,9 +19,14 @@ namespace CalendarProject.EntityFramework
         public AppDbContext(string path)
         {
             this.path = path;
-#if TEST
+#if DEBUG
             if (File.Exists(path)) File.Delete(path);
 #endif
+            var directory = Path.GetDirectoryName(path);
+            if (!Directory.Exists(directory) && directory != null)
+            {
+                Directory.CreateDirectory(directory);
+            }
             Database.EnsureCreated();
         }
 

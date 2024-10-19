@@ -15,9 +15,14 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="{x:Bind TaskTime}" Grid.Column="0" VerticalAlignment="Center" Margin="4"/>
         <TextBlock Text="{x:Bind TaskDescription}" Grid.Column="1" VerticalAlignment="Center" Margin="4"/>
+        <Ellipse Grid.Column="2"
+                 Width="16" Height="16"
+                 VerticalAlignment="Center"
+                 Fill="{x:Bind TaskPriorityColor}" Margin="4"/>
     </Grid>
 </UserControl>

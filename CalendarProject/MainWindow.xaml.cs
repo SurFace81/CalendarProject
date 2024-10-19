@@ -5,7 +5,6 @@ using Windows.UI.ViewManagement;
 
 namespace CalendarProject
 {
-
     public sealed partial class MainWindow : WindowEx
     {
         private readonly Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue;

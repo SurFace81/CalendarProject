@@ -87,6 +87,17 @@ namespace CalendarProject
                 services.AddTransient<ShellPage>();
                 services.AddTransient<ShellViewModel>();
 
+                // My classes
+                services.AddSingleton<DbWorker>(provider =>
+                {
+                    var dbPath = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), 
+                        "CalendarProject", 
+                        "app.db"
+                    );
+                    return new DbWorker(dbPath);
+                });
+
                 // Configuration
                 services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
             }).
@@ -96,21 +107,19 @@ namespace CalendarProject
 
             UnhandledException += App_UnhandledException;
 
-#if TEST
-            DbWorker dbWorker = new DbWorker(Path.Combine(AppContext.BaseDirectory, "Assets/app.db"));
+#if DEBUG
+            var dbWorker = App.GetService<DbWorker>();
 
-            User us1 = new User { Name = "us123", Email = "123@321" };
-            User us2 = new User { Name = "usABC", Email = "abc@321" };
+            TestDbCreator test = new TestDbCreator();
 
-            Event ev1 = new Event { Header = "ev1", Description = "descr1", Time = DateTime.Now, Priority = 1, User = us1 };
-            Event ev2 = new Event { Header = "ev2", Description = "descr2", Time = DateTime.Now, Priority = 2, User = us2 };
-            Event ev3 = new Event { Header = "ev3", Description = "descr3", Time = DateTime.Now, Priority = 3, User = us1 };
+            dbWorker.DbAdd<User>(test.User1, test.User2, test.User3);
+            dbWorker.DbAdd<Event>(test.Event1, test.Event2, test.Event3, 
+                                  test.Event4, test.Event5, test.Event6, 
+                                  test.Event7, test.Event8, test.Event9,
+                                  test.Event10);
+            dbWorker.DbAdd<Settings>(test.Settings1, test.Settings2, test.Settings3);
 
-            Settings sett = new Settings { User = us1, ThemeId = 1, LangId = 1 };
-
-            dbWorker.DbAdd<User>(us1, us2);
-            dbWorker.DbAdd<Event>(ev1, ev2, ev3);
-            dbWorker.DbAdd<Settings>(sett);
+            SessionContext.UserId = dbWorker.DbExecuteSQL<User>("SELECT * FROM Users WHERE AutoLogin = 1").First().Id;
 #endif
         }
 
@@ -127,7 +136,11 @@ namespace CalendarProject
             // Отправка уведомления при запуске
             //App.GetService<IAppNotificationService>().Show(string.Format("AppNotificationSamplePayload".GetLocalized(), AppContext.BaseDirectory));
 
+#if DEBUG
             await App.GetService<IActivationService>().ActivateAsync(args);
+#elif RELEASE        
+            (new LoginWindow(args)).Activate();
+#endif
         }
     }
 }

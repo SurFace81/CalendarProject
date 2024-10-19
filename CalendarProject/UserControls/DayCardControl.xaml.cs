@@ -4,6 +4,8 @@ using Microsoft.UI.Xaml.Controls;
 using CalendarProject.Models;
 using Microsoft.UI.Xaml.Input;
 using System.Collections.ObjectModel;
+using Microsoft.UI.Xaml.Media;
+using Windows.UI;
 
 namespace CalendarProject.UserControls
 {
@@ -14,10 +16,6 @@ namespace CalendarProject.UserControls
         public DayCardControl()
         {
             this.InitializeComponent();
-
-            AddTask("08:00", "Morning meeting");
-            AddTask("12:00", "Lunch break");
-            AddTask("03:00", "Project discussion");
         }
 
         private void Card_PointerPressed(object sender, PointerRoutedEventArgs e)
@@ -30,12 +28,13 @@ namespace CalendarProject.UserControls
             TasksListView.Items.Clear();
         }
 
-        public void AddTask(string time, string description)
+        public void AddTask(string time, string description, SolidColorBrush brush)
         {
             TasksListView.Items.Add(new TaskControl
             {
                 TaskTime = time,
-                TaskDescription = description
+                TaskDescription = description,
+                TaskPriorityColor = brush
             });
         }
     }

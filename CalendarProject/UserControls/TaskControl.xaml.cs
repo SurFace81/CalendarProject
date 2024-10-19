@@ -1,10 +1,13 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 
 namespace CalendarProject.UserControls
 {
     public sealed partial class TaskControl : UserControl
     {
+        public Brush TaskPriorityColor { private get; set; }
+
         public string TaskTime
         {
             get

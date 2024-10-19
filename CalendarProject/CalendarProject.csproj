@@ -16,6 +16,7 @@
     <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="LoginWindow.xaml" />
     <None Remove="UserControls\DayCardControl.xaml" />
     <None Remove="UserControls\TaskControl.xaml" />
   </ItemGroup>
@@ -45,6 +46,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="LoginWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UserControls\TaskControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -5,6 +5,8 @@ namespace CalendarProject.UserControls
 {
     public sealed partial class CardControl : UserControl
     {
+        public event EventHandler OnClicked;
+
         public CardControl()
         {
             this.InitializeComponent();
@@ -25,6 +27,8 @@ namespace CalendarProject.UserControls
             {
                 HighlightAnimation.Stop();
                 HighlightAnimation.Begin();
+
+                OnClicked?.Invoke(this, EventArgs.Empty);
             }
             _lastClickTime = now;
         }

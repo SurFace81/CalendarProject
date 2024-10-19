@@ -1,20 +1,19 @@
-﻿using CalendarProject.UserControls;
-using CalendarProject.ViewModels;
-
-using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml;
 using System.Globalization;
-using CalendarProject.Helpers;
+
+using CalendarProject.UserControls;
+using CalendarProject.ViewModels;
+using CalendarProject.Contracts.Services;
+using CalendarProject.Models;
+using Windows.UI;
 
 namespace CalendarProject.Views;
 
 public sealed partial class CalendarPage : Page
 {
-    public CalendarViewModel ViewModel
-    {
-        get;
-    }
+    public CalendarViewModel ViewModel { get; }
 
     private readonly List<CardControl> cards = new();
 
@@ -30,14 +29,12 @@ public sealed partial class CalendarPage : Page
     private void BtnPrev_Click(object sender, RoutedEventArgs e)
     {
         monthOffset -= 1;
-        ResetCards();
         CalcMonth();
     }
 
     private void BtnNext_Click(object sender, RoutedEventArgs e)
     {
         monthOffset += 1;
-        ResetCards();
         CalcMonth();
     }
 
@@ -46,13 +43,19 @@ public sealed partial class CalendarPage : Page
         foreach (var card in cards)
         {
             card.Visibility = Visibility.Visible;
+
+            (card.FindName("cardBorder") as Border).BorderThickness = new Thickness(1);
+            (card.FindName("cardBorder") as Border).BorderBrush = (SolidColorBrush)Application.Current.Resources["ControlStrokeColorDefaultBrush"];
         }
     }
 
     private int monthOffset = 0;
+    private DateTime now;
     private void CalcMonth()
     {
-        DateTime now = DateTime.Now.AddMonths(monthOffset);
+        ResetCards();
+
+        now = DateTime.Now.AddMonths(monthOffset);
         //addInfo_text.Text = now.ToString("MMMM", new CultureInfo("ru-RU")) + " " + now.Year;
         addInfo_text.Text = now.ToString("MMMM", new CultureInfo("en-US")) + " " + now.Year;
 
@@ -70,6 +73,11 @@ public sealed partial class CalendarPage : Page
             if (cards[i].Visibility == Microsoft.UI.Xaml.Visibility.Visible && dayNum <= daysInMonth)
             {
                 cards[i].Text = dayNum.ToString();
+                if (dayNum == DateTime.Now.Day && (now.Month == DateTime.Now.Month && now.Year == DateTime.Now.Year))
+                {
+                    (cards[i].FindName("cardBorder") as Border).BorderThickness = new Thickness(3);
+                    (cards[i].FindName("cardBorder") as Border).BorderBrush = new SolidColorBrush((Color)Application.Current.Resources["SystemColorControlAccentColor"]);
+                }
                 dayNum += 1;
             }
             else
@@ -92,7 +100,15 @@ public sealed partial class CalendarPage : Page
 
         for (var i = 0; i < cards.Count(); i++)
         {
-            // TODO: AddEvent
+            cards[i].OnClicked += CalendarPageCard_OnClicked;
         }
+    }
+
+    private void CalendarPageCard_OnClicked(object? sender, EventArgs e)
+    {
+        App.GetService<INavigationService>().NavigateTo(
+            typeof(AddEventViewModel).FullName!,
+            parameter: new EventStartupData { Date = new DateTime(now.Year, now.Month, Convert.ToInt32((sender as CardControl)?.Text)) }
+        );
     }
 }

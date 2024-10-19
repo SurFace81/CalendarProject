@@ -22,10 +22,11 @@ namespace CalendarProject.EntityFramework
         {
             DbContext.Database.Migrate();
             DbContext.SaveChanges();
+
         }
 
         /// <summary>
-        /// Function for add any class in DataBase
+        /// Функция для добавления некоторого класса в БД
         /// </summary>
         public void DbAdd<T>(params T[] items) where T : class
         {
@@ -33,12 +34,20 @@ namespace CalendarProject.EntityFramework
             DbContext.SaveChanges();
         }
 
-        ///<summary>
-        /// Function for execute any SQL query
-        ///</summary>
-        public List<T> DbExecuteSQL<T>(string query) where T : class
+        /// <summary>
+        /// Функция для возврата таблицы из БД
+        /// </summary>
+        public DbSet<T> DbGetTable<T>() where T : class
         {
-            return DbContext.Set<T>().FromSqlRaw(query).ToList();
+            return DbContext.Set<T>();
+        }
+
+        ///<summary>
+        /// Функция для выполнения SQl запроса к БД
+        ///</summary>
+        public List<T> DbExecuteSQL<T>(string query, params object[] parameters) where T : class
+        {
+            return DbContext.Set<T>().FromSqlRaw(query, parameters).ToList();
         }
     }
 }
