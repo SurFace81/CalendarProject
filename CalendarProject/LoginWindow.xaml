@@ -3,7 +3,7 @@
     x:Class="CalendarProject.LoginWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CalendarProject"
+    xmlns:local="using:CalendarProject.UserControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:windowex="using:WinUIEx"
@@ -18,42 +18,22 @@
     <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
 
-            <Border
-                Height="120"
-                Width="120"
-                CornerRadius="60"
-                Background="#E6E6E6"
-                HorizontalAlignment="Center">
-                <TextBlock FontFamily="Segoe MDL2 Assets" 
-                           FontSize="54" 
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center" 
-                           Text="&#xE77B;" />
-            </Border>
+            <local:AvatarControl x:Name="Avatar" Size="130"/>
 
             <StackPanel Orientation="Vertical" Width="300">
                 <TextBlock Text="Email" FontSize="16" Margin="0,5,0,0"/>
                 <TextBox x:Name="emailText" IsSpellCheckEnabled="false" PlaceholderText="someone@example.com" Margin="0,10,0,0"/>
-                <StackPanel x:Name="email_err" Visibility="Collapsed" Orientation="Horizontal" Margin="0,5,0,0">
-                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE783;" Foreground="Red" VerticalAlignment="Center"/>
-                    <TextBlock Text="Email field error" Foreground="Red" Margin="5,0,0,0"/>
-                </StackPanel>
+                <local:ErrorTextBlockControl x:Name="email_err" Text="Email field error"/>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Width="300">
                 <TextBlock Text="Password" FontSize="16" Margin="0,5,0,0"/>
                 <PasswordBox x:Name="passwText" PlaceholderText="Enter your password" Margin="0,10,0,0"/>
-                <StackPanel x:Name="passw_err" Visibility="Collapsed" Orientation="Horizontal" Margin="0,5,0,0">
-                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE783;" Foreground="Red" VerticalAlignment="Center"/>
-                    <TextBlock Text="Password field must not be empty" Foreground="Red" Margin="5,0,0,0"/>
-                </StackPanel>
+                <local:ErrorTextBlockControl x:Name="passw_err" Text="Password field must not be empty"/>
             </StackPanel>
 
             <Button Content="Login" Margin="0,20,0,0" Width="240" HorizontalAlignment="Center" Click="LoginButton_Click"/>
-            <StackPanel x:Name="userNotFoundMsg" Visibility="Collapsed" Orientation="Horizontal" Margin="0,0,0,0" HorizontalAlignment="Center">
-                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE783;" Foreground="Red" VerticalAlignment="Center"/>
-                <TextBlock Text="User not found." Foreground="Red" Margin="5,0,0,0"/>
-            </StackPanel>
+            <local:ErrorTextBlockControl x:Name="userNotFoundMsg" Text="User not found"/>
 
         </StackPanel>
     </Grid>

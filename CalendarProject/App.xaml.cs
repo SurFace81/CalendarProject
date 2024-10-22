@@ -119,7 +119,7 @@ namespace CalendarProject
                                   test.Event10);
             dbWorker.DbAdd<Settings>(test.Settings1, test.Settings2, test.Settings3);
 
-            SessionContext.UserId = dbWorker.DbExecuteSQL<User>("SELECT * FROM Users WHERE AutoLogin = 1").First().Id;
+            SessionContext.CurrentUser = dbWorker.DbExecuteSQL<User>("SELECT * FROM Users WHERE AutoLogin = 1").First();
 #endif
         }
 

@@ -2,6 +2,7 @@ using CalendarProject.Contracts.Services;
 using CalendarProject.EntityFramework;
 using CalendarProject.Helpers;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -11,6 +12,7 @@ namespace CalendarProject
     public sealed partial class LoginWindow : WindowEx
     {
         private LaunchActivatedEventArgs args;
+        private DbWorker worker;
 
         public LoginWindow(LaunchActivatedEventArgs args)
         {
@@ -18,6 +20,10 @@ namespace CalendarProject
 
             AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));
             Title = "AppDisplayName".GetLocalized();
+
+            worker = App.GetService<DbWorker>();
+
+            //Avatar.ImageSource = new BitmapImage(new Uri(Path.Combine(AppContext.BaseDirectory, "Assets/DefaultAvatar.jpg")));
 
             this.args = args;
         }
@@ -54,15 +60,20 @@ namespace CalendarProject
 
         private bool UserIsExist(string password, string email)
         {
-            DbWorker worker = App.GetService<DbWorker>();
-
             User? currUser = worker.DbExecuteSQL<User>(
                 "SELECT * FROM Users WHERE Email = {0} AND Password = {1}", 
                 email, 
                 password
             ).FirstOrDefault();
 
-            if (currUser != null) SessionContext.UserId = currUser.Id;
+            if (currUser != null)
+            {
+                SessionContext.CurrentUser = currUser;
+                SessionContext.CurrentSettings = worker.DbExecuteSQL<Settings>(
+                    "SELECT * FROM Settings WHERE UserId = {0}",
+                    currUser.Id
+                ).FirstOrDefault() ?? new Settings { ThemeId = 1, LangId = 1 };
+            }
 
             return currUser != null;
         }

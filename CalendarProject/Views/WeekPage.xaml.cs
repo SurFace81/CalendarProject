@@ -65,7 +65,7 @@ namespace CalendarProject.Views
         {
             List<Event> events = dbWorker.DbExecuteSQL<Event>(
                 "SELECT * FROM Events WHERE UserId = {0} AND Date = {1}",
-                SessionContext.UserId, 
+                SessionContext.CurrentUser.Id, 
                 day.ToString("yyyy-MM-dd HH:mm:ss")
             );
 

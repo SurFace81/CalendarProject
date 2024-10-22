@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CalendarProject.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace CalendarProject
 {
     internal class SessionContext
     {
-        public static int UserId {  get; set; }
+        public static User CurrentUser { get; set; }
+        public static Settings CurrentSettings { get; set; }
     }
 }

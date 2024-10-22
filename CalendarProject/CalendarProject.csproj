@@ -17,7 +17,9 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="LoginWindow.xaml" />
+    <None Remove="UserControls\AvatarControl.xaml" />
     <None Remove="UserControls\DayCardControl.xaml" />
+    <None Remove="UserControls\ErrorTextBlockControl.xaml" />
     <None Remove="UserControls\TaskControl.xaml" />
   </ItemGroup>
 
@@ -46,6 +48,12 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="UserControls\ErrorTextBlockControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="UserControls\AvatarControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="LoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
