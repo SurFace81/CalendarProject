@@ -8,6 +8,7 @@ using CalendarProject.ViewModels;
 using CalendarProject.Contracts.Services;
 using CalendarProject.Models;
 using Windows.UI;
+using CalendarProject.EntityFramework;
 
 namespace CalendarProject.Views;
 
@@ -16,10 +17,12 @@ public sealed partial class CalendarPage : Page
     public CalendarViewModel ViewModel { get; }
 
     private readonly List<CardControl> cards = new();
+    private DbWorker dbWorker;
 
     public CalendarPage()
     {
         ViewModel = App.GetService<CalendarViewModel>();
+        dbWorker = App.GetService<DbWorker>();
         InitializeComponent();
 
         InitCards();
@@ -78,6 +81,31 @@ public sealed partial class CalendarPage : Page
                     (cards[i].FindName("cardBorder") as Border).BorderThickness = new Thickness(3);
                     (cards[i].FindName("cardBorder") as Border).BorderBrush = new SolidColorBrush((Color)Application.Current.Resources["SystemColorControlAccentColor"]);
                 }
+
+                cards[i].ClearPriorities();
+
+                var eventsPriorities = dbWorker.DbExecuteSQL<Event>(
+                    "SELECT * FROM Events WHERE Date = {0}",
+                    new DateTime(now.Year, now.Month, dayNum).ToString("yyyy-MM-dd HH:mm:ss")
+                );
+
+                foreach (var item in eventsPriorities)
+                {
+                    switch (item.Priority)
+                    {
+                        case 1:
+                            cards[i].LowPriority = true;
+                            break;
+                        case 2:
+                            cards[i].MediumPriority = true;
+                            break;
+                        case 3:
+                            cards[i].HighPriority = true;
+                            break;
+                        default: break;
+                    }
+                }
+
                 dayNum += 1;
             }
             else

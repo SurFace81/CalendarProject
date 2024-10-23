@@ -47,7 +47,8 @@ namespace CalendarProject.EntityFramework
         ///</summary>
         public List<T> DbExecuteSQL<T>(string query, params object[] parameters) where T : class
         {
-            return DbContext.Set<T>().FromSqlRaw(query, parameters).ToList();
+            var temp = DbContext.Set<T>().FromSqlRaw(query, parameters).ToList();
+            return temp;
         }
     }
 }

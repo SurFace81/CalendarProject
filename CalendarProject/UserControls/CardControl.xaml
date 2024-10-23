@@ -2,7 +2,7 @@
     x:Class="CalendarProject.UserControls.CardControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CalendarProject.Views"
+    xmlns:local="using:CalendarProject.UserControls"
     x:Name="Card"
     Width="Auto"
     Height="Auto">
@@ -22,7 +22,32 @@
             <Border.Shadow>
                 <ThemeShadow />
             </Border.Shadow>
-            <TextBlock x:Name="CardTextView" Foreground="{ThemeResource TextFillColorPrimaryBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           x:Name="CardTextView" 
+                           Foreground="{ThemeResource TextFillColorPrimaryBrush}" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Top" />
+
+                <Grid Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <local:PriorityDisplayControl x:Name="highPrty" Size="10" Grid.Column="0" Margin="0,0,2,0" BorderColor="Red" Visibility="Collapsed"/>
+                    <local:PriorityDisplayControl x:Name="mediumPrty" Size="10" Grid.Column="1" Margin="2,0,2,0" BorderColor="Gold" Visibility="Collapsed"/>
+                    <local:PriorityDisplayControl x:Name="lowPrty" Size="10" Grid.Column="2" Margin="2,0,0,0" BorderColor="Green" Visibility="Collapsed"/>
+                </Grid>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>
