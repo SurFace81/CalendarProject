@@ -21,17 +21,4 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Page Update="UserControls\TaskControl.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Themes\Generic.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="UserControls\DayCardControl.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
 </Project>

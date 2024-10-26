@@ -47,8 +47,8 @@ public sealed partial class CalendarPage : Page
         {
             card.Visibility = Visibility.Visible;
 
-            (card.FindName("cardBorder") as Border).BorderThickness = new Thickness(1);
-            (card.FindName("cardBorder") as Border).BorderBrush = (SolidColorBrush)Application.Current.Resources["ControlStrokeColorDefaultBrush"];
+            (card.FindName("cardBorder") as Border)!.BorderThickness = new Thickness(1);
+            (card.FindName("cardBorder") as Border)!.BorderBrush = (SolidColorBrush)Application.Current.Resources["ControlStrokeColorDefaultBrush"];
         }
     }
 
@@ -78,39 +78,44 @@ public sealed partial class CalendarPage : Page
                 cards[i].Text = dayNum.ToString();
                 if (dayNum == DateTime.Now.Day && (now.Month == DateTime.Now.Month && now.Year == DateTime.Now.Year))
                 {
-                    (cards[i].FindName("cardBorder") as Border).BorderThickness = new Thickness(3);
-                    (cards[i].FindName("cardBorder") as Border).BorderBrush = new SolidColorBrush((Color)Application.Current.Resources["SystemColorControlAccentColor"]);
+                    (cards[i].FindName("cardBorder") as Border)!.BorderThickness = new Thickness(3);
+                    (cards[i].FindName("cardBorder") as Border)!.BorderBrush = new SolidColorBrush((Color)Application.Current.Resources["SystemColorControlAccentColor"]);
                 }
 
-                cards[i].ClearPriorities();
-
-                var eventsPriorities = dbWorker.DbExecuteSQL<Event>(
-                    "SELECT * FROM Events WHERE Date = {0}",
-                    new DateTime(now.Year, now.Month, dayNum).ToString("yyyy-MM-dd HH:mm:ss")
-                );
-
-                foreach (var item in eventsPriorities)
-                {
-                    switch (item.Priority)
-                    {
-                        case 1:
-                            cards[i].LowPriority = true;
-                            break;
-                        case 2:
-                            cards[i].MediumPriority = true;
-                            break;
-                        case 3:
-                            cards[i].HighPriority = true;
-                            break;
-                        default: break;
-                    }
-                }
-
+                GetPriorities(cards[i], dayNum);
                 dayNum += 1;
             }
             else
             {
                 cards[i].Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+            }
+        }
+    }
+
+    private void GetPriorities(CardControl card, int day)
+    {
+        card.ClearPriorities();
+
+        var eventsPriorities = dbWorker.DbExecuteSQL<Event>(
+            "SELECT * FROM Events WHERE Date = @p0 AND UserId = @p1",
+            new DateTime(now.Year, now.Month, day).ToString("yyyy-MM-dd HH:mm:ss"),
+            SessionContext.CurrentUser.Id
+        );
+
+        foreach (var item in eventsPriorities)
+        {
+            switch (item.Priority)
+            {
+                case 1:
+                    card.LowPriority = true;
+                    break;
+                case 2:
+                    card.MediumPriority = true;
+                    break;
+                case 3:
+                    card.HighPriority = true;
+                    break;
+                default: break;
             }
         }
     }
@@ -135,7 +140,7 @@ public sealed partial class CalendarPage : Page
     private void CalendarPageCard_OnClicked(object? sender, EventArgs e)
     {
         App.GetService<INavigationService>().NavigateTo(
-            typeof(AddEventViewModel).FullName!,
+            typeof(DayViewModel).FullName!,
             parameter: new EventStartupData { Date = new DateTime(now.Year, now.Month, Convert.ToInt32((sender as CardControl)?.Text)) }
         );
     }

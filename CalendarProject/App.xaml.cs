@@ -78,8 +78,8 @@ namespace CalendarProject
                 services.AddTransient<SettingsPage>();
                 services.AddTransient<UserProfileViewModel>();
                 services.AddTransient<UserProfilePage>();
-                services.AddTransient<WeekViewModel>();
-                services.AddTransient<WeekPage>();
+                services.AddTransient<DayViewModel>();
+                services.AddTransient<DayPage>();
                 services.AddTransient<AddEventViewModel>();
                 services.AddTransient<AddEventPage>();
                 services.AddTransient<CalendarViewModel>();

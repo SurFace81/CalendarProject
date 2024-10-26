@@ -53,7 +53,7 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE710;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Week" helpers:NavigationHelper.NavigateTo="CalendarProject.ViewModels.WeekViewModel">
+                <NavigationViewItem x:Uid="Shell_Day" helpers:NavigationHelper.NavigateTo="CalendarProject.ViewModels.DayViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8FD;"/>
                     </NavigationViewItem.Icon>

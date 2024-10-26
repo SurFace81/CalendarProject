@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,6 @@ namespace CalendarProject.EntityFramework
         {
             DbContext.Database.Migrate();
             DbContext.SaveChanges();
-
         }
 
         /// <summary>
@@ -32,6 +32,19 @@ namespace CalendarProject.EntityFramework
         {
             DbContext.AddRange(items);
             DbContext.SaveChanges();
+        }
+
+        /// <summary>
+        /// Функция для удаления элемента из БД
+        /// </summary>
+        public void DbDelete<T>(int id) where T : class
+        {
+            var item = DbContext.Set<T>().Find(id);
+            if (item != null)
+            {
+                DbContext.Set<T>().Remove(item);
+                DbContext.SaveChanges();
+            }
         }
 
         /// <summary>
@@ -45,10 +58,10 @@ namespace CalendarProject.EntityFramework
         ///<summary>
         /// Функция для выполнения SQl запроса к БД
         ///</summary>
-        public List<T> DbExecuteSQL<T>(string query, params object[] parameters) where T : class
+        public List<T> DbExecuteSQL<T>(string query, params object[] parameters)
+            where T : class
         {
-            var temp = DbContext.Set<T>().FromSqlRaw(query, parameters).ToList();
-            return temp;
+            return DbContext.Set<T>().FromSqlRaw(query, parameters).ToList();
         }
     }
 }

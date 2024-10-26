@@ -16,7 +16,7 @@ public class PageService : IPageService
     {
         Configure<CalendarViewModel, CalendarPage>();
         Configure<AddEventViewModel, AddEventPage>();
-        Configure<WeekViewModel, WeekPage>();
+        Configure<DayViewModel, DayPage>();
         Configure<UserProfileViewModel, UserProfilePage>();
         Configure<SettingsViewModel, SettingsPage>();
     }

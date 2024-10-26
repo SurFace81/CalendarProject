@@ -61,7 +61,7 @@ namespace CalendarProject
         private bool UserIsExist(string password, string email)
         {
             User? currUser = worker.DbExecuteSQL<User>(
-                "SELECT * FROM Users WHERE Email = {0} AND Password = {1}", 
+                "SELECT * FROM Users WHERE Email = @p0 AND Password = @p1", 
                 email, 
                 password
             ).FirstOrDefault();
@@ -70,7 +70,7 @@ namespace CalendarProject
             {
                 SessionContext.CurrentUser = currUser;
                 SessionContext.CurrentSettings = worker.DbExecuteSQL<Settings>(
-                    "SELECT * FROM Settings WHERE UserId = {0}",
+                    "SELECT * FROM Settings WHERE UserId = @p0",
                     currUser.Id
                 ).FirstOrDefault() ?? new Settings { ThemeId = 1, LangId = 1 };
             }

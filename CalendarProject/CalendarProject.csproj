@@ -18,10 +18,8 @@
   <ItemGroup>
     <None Remove="LoginWindow.xaml" />
     <None Remove="UserControls\AvatarControl.xaml" />
-    <None Remove="UserControls\DayCardControl.xaml" />
     <None Remove="UserControls\ErrorTextBlockControl.xaml" />
     <None Remove="UserControls\PriorityDisplayControl.xaml" />
-    <None Remove="UserControls\TaskControl.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +28,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
@@ -59,12 +58,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="LoginWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UserControls\TaskControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="UserControls\DayCardControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

@@ -129,8 +129,8 @@
   <data name="Shell_AddEvent.Content" xml:space="preserve">
     <value>AddEvent</value>
   </data>
-  <data name="Shell_Week.Content" xml:space="preserve">
-    <value>Week</value>
+  <data name="Shell_Day.Content" xml:space="preserve">
+    <value>Day</value>
   </data>
   <data name="Shell_UserProfile.Content" xml:space="preserve">
     <value>UserProfile</value>
@@ -256,5 +256,26 @@
   </data>
   <data name="Settings_Locale_Rus.Content" xml:space="preserve">
     <value>Russian</value>
+  </data>
+  <data name="addEventBtn.Content" xml:space="preserve">
+    <value>Add event</value>
+  </data>
+  <data name="timeLvHeader.Text" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="descLvHeader.Text" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="prtyLvHeader.Text" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="editFlyMenuItem.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="deleteFlyMenuItem.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="noEventsMessage.Text" xml:space="preserve">
+    <value>No event for this day</value>
   </data>
 </root>

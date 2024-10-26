@@ -2,9 +2,9 @@
 
 namespace CalendarProject.ViewModels;
 
-public partial class WeekViewModel : ObservableRecipient
+public partial class DayViewModel : ObservableRecipient
 {
-    public WeekViewModel()
+    public DayViewModel()
     {
     }
 }
