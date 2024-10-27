@@ -48,18 +48,26 @@ namespace CalendarProject.EntityFramework
         }
 
         /// <summary>
+        /// Функция для обновления записи в БД
+        /// </summary>
+        public void DbUpdate<T>(T item) where T : class
+        {
+            DbContext.Set<T>().Update(item);
+            DbContext.SaveChanges();
+        }
+
+        /// <summary>
         /// Функция для возврата таблицы из БД
         /// </summary>
-        public DbSet<T> DbGetTable<T>() where T : class
+        public List<T> DbGetTable<T>() where T : class
         {
-            return DbContext.Set<T>();
+            return DbContext.Set<T>().ToList();
         }
 
         ///<summary>
         /// Функция для выполнения SQl запроса к БД
         ///</summary>
-        public List<T> DbExecuteSQL<T>(string query, params object[] parameters)
-            where T : class
+        public List<T> DbExecuteSQL<T>(string query, params object[] parameters) where T : class
         {
             return DbContext.Set<T>().FromSqlRaw(query, parameters).ToList();
         }
