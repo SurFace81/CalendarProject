@@ -1,3 +1,4 @@
+using CalendarProject.EntityFramework;
 using CalendarProject.Models;
 using CalendarProject.ViewModels;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -10,6 +11,9 @@ namespace CalendarProject.Views
 
     public sealed partial class AddEventPage : Page
     {
+        private DbWorker dbWorker { get; }
+
+
         public AddEventViewModel ViewModel
         {
             get;
@@ -18,6 +22,8 @@ namespace CalendarProject.Views
         public AddEventPage()
         {
             this.InitializeComponent();
+            dbWorker = App.GetService<DbWorker>();
+
         }
 
         private void NotificationCheckBox_Checked(object sender, RoutedEventArgs e)
@@ -32,22 +38,69 @@ namespace CalendarProject.Views
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            string eventDescription = EventDescriptionTextBox.Text;
-            DateTime eventDate = EventDatePicker.Date.DateTime;
-            TimeSpan eventTime = EventTimePicker.Time;
-            string priority = (PriorityComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
-            bool notificationsEnabled = NotificationCheckBox.IsChecked ?? false;
 
-            string notificationTime = null;
+            string Header = EventTitleTextBox.Text;
+            string Description = EventDescriptionTextBox.Text;
+            DateTime Date = EventDatePicker.Date.Date + TimeSpan.Zero;
+            DateTime Time = Date.Add(EventTimePicker.Time);
+
+            int Priority = (PriorityComboBox.SelectedItem as ComboBoxItem)?.Content.ToString() switch
+            {
+                "Low" => 1,
+                "Medium" => 2,
+                "High" => 3,
+                _ => 0
+            };
+
+            bool notificationsEnabled = NotificationCheckBox.IsChecked ?? false;
+            DateTime NotifTime;
+
             if (notificationsEnabled)
             {
-                notificationTime = (NotificationTimeComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+                var selectedItem = NotificationTimeComboBox.SelectedItem as ComboBoxItem;
+                NotifTime = selectedItem != null
+                    ? CalculateNotifTime(Time, selectedItem.Content.ToString())
+                    : DateTime.Now;
+            }
+            else
+            {
+                NotifTime = DateTime.Now;
             }
 
-            // Логика для сохранения события
-            // Например, можно сохранить данные в базе данных или отправить их в другой сервис
+            Event newEvent = new Event
+            {
+                UserId = SessionContext.CurrentUser.Id,
+                Time = Time,
+                Date = Date,
+                NotifTime = NotifTime,
+                Header = Header,
+                Description = Description,
+                Priority = Priority
+            };
 
-            // Переход на предыдущую страницу или показ уведомления о сохранении
+            dbWorker.DbAdd(newEvent);
+            Frame.GoBack();
+
+            Frame.Navigate(typeof(DayPage));
+
+
+        }
+
+        private DateTime CalculateNotifTime(DateTime eventDateTime, string NotifTimeStr)
+        {
+            int minutesBeforeEvent = NotifTimeStr switch
+            {
+                "5 minutes" => 5,
+                "10 minutes" => 10,
+                "15 minutes" => 10,
+                "30 minutes" => 30,
+                "1 hour" => 60,
+                "2 hours" => 120,
+                "1 day" => 3600,
+                _ => 0
+            };
+
+            return eventDateTime.AddMinutes(-minutesBeforeEvent);
         }
 
     }

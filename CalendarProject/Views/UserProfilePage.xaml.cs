@@ -1,4 +1,5 @@
-﻿using CalendarProject.ViewModels;
+﻿using CalendarProject.EntityFramework;
+using CalendarProject.ViewModels;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -12,6 +13,9 @@ namespace CalendarProject.Views;
 
 public sealed partial class UserProfilePage : Page
 {
+    private DbWorker dbWorker { get; }
+    public bool CheckBoxValue { get; private set; }
+
     public UserProfileViewModel ViewModel
     {
         get;
@@ -20,6 +24,7 @@ public sealed partial class UserProfilePage : Page
     public UserProfilePage()
     {
         ViewModel = App.GetService<UserProfileViewModel>();
+        dbWorker = App.GetService<DbWorker>();
         InitializeComponent();
     }
 
@@ -28,9 +33,36 @@ public sealed partial class UserProfilePage : Page
         // Нужно сделать добавление картинки
     }
 
+    private void AutoLoginCheckBox_Checked(object sender, RoutedEventArgs e)
+    {
+        bool CheckBoxValue = true;
+    }
+
+    private void AutoLoginCheckBox_Unchecked(object sender, RoutedEventArgs e)
+    {
+        bool CheckBoxValue = false;
+    }
+
     private void SaveButton_Click(object sender, RoutedEventArgs e)
     {
-        // Пустой обработчик для кнопки сохранения информации
+        string Name = UserNameTextBox.Text;
+        string Email = UserEmailTextBox.Text;
+        string Password = UserPasswordTextBox.Text;
+        bool AutoLogin = CheckBoxValue;
+        
+
+        User newUser = new User
+        {
+            Name = Name,
+            Email = Email,
+            Password = Password,
+            AutoLogin = AutoLogin,
+        };
+
+        dbWorker.DbAdd(newUser);
+        Frame.GoBack();
+
+        Frame.Navigate(typeof(DayPage));
     }
 
     private void LogoutButton_Click(object sender, RoutedEventArgs e)
