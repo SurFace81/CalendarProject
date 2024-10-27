@@ -32,7 +32,7 @@ namespace CalendarProject
         {
             if (ValidatePassword(passwText.Password) && ValidateEmail(emailText.Text))
             {
-                if (UserIsExist(GetMD5Hash(passwText.Password), emailText.Text))
+                if (UserIsExist(SessionContext.GetMD5Hash(passwText.Password), emailText.Text))
                 {
                     await App.GetService<IActivationService>().ActivateAsync(args);
                     this.Close();
@@ -61,8 +61,8 @@ namespace CalendarProject
         private bool UserIsExist(string password, string email)
         {
             User? currUser = worker.DbExecuteSQL<User>(
-                "SELECT * FROM Users WHERE Email = @p0 AND Password = @p1", 
-                email, 
+                "SELECT * FROM Users WHERE Email = @p0 AND Password = @p1",
+                email,
                 password
             ).FirstOrDefault();
 
@@ -76,22 +76,6 @@ namespace CalendarProject
             }
 
             return currUser != null;
-        }
-
-        private string GetMD5Hash(string input)
-        {
-            using (MD5 md5 = MD5.Create())
-            {
-                byte[] inputBytes = Encoding.ASCII.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < hashBytes.Length; i++)
-                {
-                    sb.Append(hashBytes[i].ToString("x2"));
-                }
-                return sb.ToString();
-            }
         }
 
         private bool ValidatePassword(string password)

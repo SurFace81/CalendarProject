@@ -52,19 +52,13 @@ namespace CalendarProject.Views
                 _ => 0
             };
 
-            bool notificationsEnabled = NotificationCheckBox.IsChecked ?? false;
-            DateTime NotifTime;
-
-            if (notificationsEnabled)
+            DateTime? NotifTime = null;
+            if (NotificationCheckBox.IsChecked ?? false)
             {
                 var selectedItem = NotificationTimeComboBox.SelectedItem as ComboBoxItem;
                 NotifTime = selectedItem != null
-                    ? CalculateNotifTime(Time, selectedItem.Content.ToString())
-                    : DateTime.Now;
-            }
-            else
-            {
-                NotifTime = DateTime.Now;
+                    ? CalculateNotifTime(Time, selectedItem.Content.ToString()!)
+                    : null;
             }
 
             Event newEvent = new Event
@@ -79,11 +73,9 @@ namespace CalendarProject.Views
             };
 
             dbWorker.DbAdd(newEvent);
+
             Frame.GoBack();
-
             Frame.Navigate(typeof(DayPage));
-
-
         }
 
         private DateTime CalculateNotifTime(DateTime eventDateTime, string NotifTimeStr)
@@ -92,11 +84,11 @@ namespace CalendarProject.Views
             {
                 "5 minutes" => 5,
                 "10 minutes" => 10,
-                "15 minutes" => 10,
+                "15 minutes" => 15,
                 "30 minutes" => 30,
                 "1 hour" => 60,
                 "2 hours" => 120,
-                "1 day" => 3600,
+                "1 day" => 1440,
                 _ => 0
             };
 

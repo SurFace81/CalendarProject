@@ -60,9 +60,6 @@ public sealed partial class UserProfilePage : Page
         };
 
         dbWorker.DbAdd(newUser);
-        Frame.GoBack();
-
-        Frame.Navigate(typeof(DayPage));
     }
 
     private void LogoutButton_Click(object sender, RoutedEventArgs e)

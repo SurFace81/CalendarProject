@@ -24,7 +24,7 @@ namespace CalendarProject.EntityFramework
         public int UserId { get; set; }
         public DateTime Time { get; set; }
         public DateTime Date { get; set; }
-        public DateTime NotifTime { get; set; }
+        public DateTime? NotifTime { get; set; }
         public string Header { get; set; }
         public string Description { get; set; }
         public int Priority { get; set; }
