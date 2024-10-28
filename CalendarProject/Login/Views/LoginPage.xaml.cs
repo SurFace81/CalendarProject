@@ -1,45 +1,38 @@
 using CalendarProject.Contracts.Services;
 using CalendarProject.EntityFramework;
-using CalendarProject.Helpers;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media.Imaging;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.RegularExpressions;
+using Microsoft.UI.Xaml.Controls;
 
-namespace CalendarProject
+namespace CalendarProject.Views
 {
-    public sealed partial class LoginWindow : WindowEx
+    public sealed partial class LoginPage : Page
     {
-        private LaunchActivatedEventArgs args;
         private DbWorker worker;
 
-        public LoginWindow(LaunchActivatedEventArgs args)
+        public LoginPage()
         {
             this.InitializeComponent();
 
-            AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));
-            Title = "AppDisplayName".GetLocalized();
-
             worker = App.GetService<DbWorker>();
-
-            //Avatar.ImageSource = new BitmapImage(new Uri(Path.Combine(AppContext.BaseDirectory, "Assets/DefaultAvatar.jpg")));
-
-            this.args = args;
         }
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ValidatePassword(passwText.Password) && ValidateEmail(emailText.Text))
+            if (SessionContext.ValidatePassword(passwText.Password) && SessionContext.ValidateEmail(emailText.Text))
             {
                 if (UserIsExist(SessionContext.GetMD5Hash(passwText.Password), emailText.Text))
                 {
-                    await App.GetService<IActivationService>().ActivateAsync(args);
-                    this.Close();
+                    emailText.ClearValue(Control.StyleProperty);
+                    passwText.ClearValue(Control.StyleProperty);
+
+                    await App.GetService<IActivationService>().ActivateAsync(LoginWindow.args);
+
+                    App.loginWindow.Close();
                 }
                 else
                 {
-                    userNotFoundMsg.Visibility = Visibility.Visible;
+                    emailText.Style = (Style)Resources["ErrorTextBoxStyle"];
+                    passwText.Style = (Style)Resources["ErrorPasswordBoxStyle"];
                 }
             }
             else
@@ -47,11 +40,11 @@ namespace CalendarProject
                 passw_err.Visibility = Visibility.Collapsed;
                 email_err.Visibility = Visibility.Collapsed;
 
-                if (!ValidatePassword(passwText.Password))
+                if (!SessionContext.ValidatePassword(passwText.Password))
                 {
                     passw_err.Visibility = Visibility.Visible;
                 }
-                if (!ValidateEmail(emailText.Text))
+                if (!SessionContext.ValidateEmail(emailText.Text))
                 {
                     email_err.Visibility = Visibility.Visible;
                 }
@@ -78,16 +71,14 @@ namespace CalendarProject
             return currUser != null;
         }
 
-        private bool ValidatePassword(string password)
+        private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-            return !string.IsNullOrEmpty(password);
+            App.loginWindow.Content = App.GetService<SignUpPage>();
         }
 
-        private bool ValidateEmail(string email)
+        private void ForgotButton_Click(object sender, RoutedEventArgs e)
         {
-            Regex emailRegex = new Regex(@"^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-            return !string.IsNullOrWhiteSpace(email) && emailRegex.IsMatch(email);
         }
     }
 }

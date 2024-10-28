@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CalendarProject
@@ -27,6 +28,18 @@ namespace CalendarProject
                 }
                 return sb.ToString();
             }
+        }
+
+        public static bool ValidatePassword(string password)
+        {
+            return !string.IsNullOrEmpty(password);
+        }
+
+        public static bool ValidateEmail(string email)
+        {
+            Regex emailRegex = new Regex(@"^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+            return !string.IsNullOrWhiteSpace(email) && emailRegex.IsMatch(email);
         }
     }
 }

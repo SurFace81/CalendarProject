@@ -20,6 +20,8 @@
     <None Remove="UserControls\AvatarControl.xaml" />
     <None Remove="UserControls\ErrorTextBlockControl.xaml" />
     <None Remove="UserControls\PriorityDisplayControl.xaml" />
+    <None Remove="Views\LoginPage.xaml" />
+    <None Remove="Views\SignUpPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,6 +50,12 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\SignUpPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="UserControls\PriorityDisplayControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -64,6 +72,10 @@
 
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Login\Views\" />
   </ItemGroup>
   
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">

@@ -63,7 +63,7 @@ namespace CalendarProject.Views
                 DayEvents.Add(new EventsListItem
                 {
                     Id = item.Id,
-                    Time = item.Date.ToString("hh:mm:ss"),
+                    Time = item.Time.ToString("HH:mm:ss"),
                     Description = TrimString(item.Description, 80),
                     PriorityColor = GetPriorityColor(item.Priority),
                 });

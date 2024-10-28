@@ -25,8 +25,8 @@
             </Grid.ColumnDefinitions>
             <DatePicker x:Name="datePicker" Grid.Column="0" Margin="20,0,0,0" 
                 HorizontalAlignment="Left" VerticalAlignment="Center"
-                FontSize="18" SelectedDateChanged="OnSelectedDateChanged"/>
-            <Button Grid.Column="1" x:Uid="addEventBtn" FontSize="18" Click="OnAddEventButtonClick" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20"/>
+                FontSize="16" SelectedDateChanged="OnSelectedDateChanged"/>
+            <Button Grid.Column="1" x:Uid="addEventBtn" FontSize="16" Click="OnAddEventButtonClick" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20"/>
         </Grid>
 
         <Grid VerticalAlignment="Top" Margin="0,60,0,0">
@@ -59,9 +59,9 @@
                                 <ColumnDefinition Width="80" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" Text="{x:Bind Time}" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="1" Text="{x:Bind Description}" />
-                            <local:PriorityDisplayControl Size="14" Grid.Column="2" BorderColor="{x:Bind PriorityColor}"/>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{x:Bind Time}" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="{x:Bind Description}" Padding="12" />
+                            <local:PriorityDisplayControl VerticalAlignment="Center" HorizontalAlignment="Center" Size="14" Grid.Column="2" BorderColor="{x:Bind PriorityColor}"/>
 
                             <Grid.ContextFlyout>
                                 <MenuFlyout>

@@ -42,6 +42,7 @@ namespace CalendarProject
         }
 
         public static WindowEx MainWindow { get; } = new MainWindow();
+        public static WindowEx loginWindow { get; set; }
 
         public static UIElement? AppTitlebar { get; set; }
 
@@ -86,6 +87,8 @@ namespace CalendarProject
                 services.AddTransient<CalendarPage>();
                 services.AddTransient<ShellPage>();
                 services.AddTransient<ShellViewModel>();
+                services.AddTransient<LoginPage>();
+                services.AddTransient<SignUpPage>();
 
                 // My classes
                 services.AddSingleton<DbWorker>(provider =>
@@ -138,8 +141,10 @@ namespace CalendarProject
 
 #if DEBUG
             await App.GetService<IActivationService>().ActivateAsync(args);
-#elif RELEASE        
-            (new LoginWindow(args)).Activate();
+#elif RELEASE
+            loginWindow = new LoginWindow(args);
+            loginWindow.Content = App.GetService<LoginPage>();
+            loginWindow.Activate();
 #endif
         }
     }
