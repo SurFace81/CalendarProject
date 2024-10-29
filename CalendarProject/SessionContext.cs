@@ -37,7 +37,7 @@ namespace CalendarProject
 
         public static bool ValidateEmail(string email)
         {
-            Regex emailRegex = new Regex(@"^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            Regex emailRegex = new Regex(@"^[a-zA-Z0-9\.]+@[a-zA-Z0-9]+\.[a-zA-Z]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
             return !string.IsNullOrWhiteSpace(email) && emailRegex.IsMatch(email);
         }

@@ -8,8 +8,8 @@
     xmlns:local="using:CalendarProject.Views" 
     xmlns:loc="using:CalendarProject.UserControls">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-        <Grid Padding="10">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto"/>
@@ -19,11 +19,8 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+            <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Spacing="20" VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Center" Width="250">
                 <loc:AvatarControl x:Name="UserAvatar" Size="220"/>
-            </StackPanel>
-
-            <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,-40,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="250">
                 <Button Content="Change Avatar" HorizontalAlignment="Stretch" Height="35" Click="ChangeAvatarButton_Click"/>
             </StackPanel>
 

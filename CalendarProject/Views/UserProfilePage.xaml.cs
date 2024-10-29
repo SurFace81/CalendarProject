@@ -47,7 +47,7 @@ public sealed partial class UserProfilePage : Page
     {
         string Name = UserNameTextBox.Text;
         string Email = UserEmailTextBox.Text;
-        string Password = UserPasswordTextBox.Text;
+        string Password = UserPasswordTextBox.Password;
         bool AutoLogin = CheckBoxValue;
         
 

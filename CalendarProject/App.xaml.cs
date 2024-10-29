@@ -89,6 +89,7 @@ namespace CalendarProject
                 services.AddTransient<ShellViewModel>();
                 services.AddTransient<LoginPage>();
                 services.AddTransient<SignUpPage>();
+                services.AddTransient<ForgotPage>();
 
                 // My classes
                 services.AddSingleton<DbWorker>(provider =>
