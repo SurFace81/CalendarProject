@@ -71,5 +71,10 @@ namespace CalendarProject.EntityFramework
         {
             return DbContext.Set<T>().FromSqlRaw(query, parameters).ToList();
         }
+
+        public User GetUserById(int userId)
+        {
+            return DbContext.Set<User>().FirstOrDefault(u => u.Id == userId);
+        }
     }
 }
