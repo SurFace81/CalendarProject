@@ -12,7 +12,7 @@
         <Border
             x:Name="AvatarBack"
             Background="#E6E6E6">
-            <ContentControl x:Name="AvatarContent" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ContentControl x:Name="AvatarContent" Foreground="{ThemeResource TextBoxForegroundThemeBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
     </Grid>
 </UserControl>
