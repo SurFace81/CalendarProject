@@ -12,6 +12,8 @@ namespace CalendarProject.Views
         public LoginPage()
         {
             this.InitializeComponent();
+            passw_err.Visibility = Visibility.Collapsed;
+            email_err.Visibility = Visibility.Collapsed;
 
             worker = App.GetService<DbWorker>();
         }
@@ -78,7 +80,7 @@ namespace CalendarProject.Views
 
         private void ForgotButton_Click(object sender, RoutedEventArgs e)
         {
-
+            App.loginWindow.Content = App.GetService<ForgotPage>();
         }
     }
 }

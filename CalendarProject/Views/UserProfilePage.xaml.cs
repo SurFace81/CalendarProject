@@ -49,11 +49,19 @@ public sealed partial class UserProfilePage : Page
 
     private void SaveButton_Click(object sender, RoutedEventArgs e)
     {
+<<<<<<< HEAD
         string name = UserNameTextBox.Text;
         string email = UserEmailTextBox.Text;
         string password = UserPasswordTextBox.Text;
         bool autoLogin = CheckBoxValue;
         int userId = SessionContext.CurrentUser.Id;
+=======
+        string Name = UserNameTextBox.Text;
+        string Email = UserEmailTextBox.Text;
+        string Password = UserPasswordTextBox.Password;
+        bool AutoLogin = CheckBoxValue;
+        
+>>>>>>> aae4722b9f193404e40ecd4ab15033e0ba029122
 
         try
         {
