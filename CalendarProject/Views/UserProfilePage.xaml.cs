@@ -45,25 +45,44 @@ public sealed partial class UserProfilePage : Page
 
     private void SaveButton_Click(object sender, RoutedEventArgs e)
     {
-        string Name = UserNameTextBox.Text;
-        string Email = UserEmailTextBox.Text;
-        string Password = UserPasswordTextBox.Password;
-        bool AutoLogin = CheckBoxValue;
-        
+        string name = UserNameTextBox.Text;
+        string email = UserEmailTextBox.Text;
+        string password = UserPasswordTextBox.Password;
+        bool autoLogin = CheckBoxValue;
+        int userId = SessionContext.CurrentUser.Id;
 
-        User newUser = new User
+        if (ValidateInput(name, email, password))
         {
-            Name = Name,
-            Email = Email,
-            Password = Password,
-            AutoLogin = AutoLogin,
-        };
+            User? userToUpdate = dbWorker.DbExecuteSQL<User>(
+                "SELECT * FROM Users WHERE Id = @p0",
+                userId
+            ).FirstOrDefault();
 
-        dbWorker.DbAdd(newUser);
+            if (userToUpdate != null)
+            {
+                userToUpdate.Name = name;
+                userToUpdate.Email = email;
+                userToUpdate.Password = SessionContext.GetMD5Hash(password);
+                userToUpdate.AutoLogin = autoLogin;
+
+                dbWorker.DbUpdate(userToUpdate);
+            }
+        }
+        
     }
 
+    private bool ValidateInput(string name, string email, string password)
+    {
+        bool flag = false;
 
+        name_err.Visibility = string.IsNullOrWhiteSpace(name) ? Visibility.Visible : Visibility.Collapsed;
+        email_err.Visibility = string.IsNullOrWhiteSpace(email) || !SessionContext.ValidateEmail(email) ? Visibility.Visible : Visibility.Collapsed;
+        passw_err.Visibility = string.IsNullOrWhiteSpace(password) ? Visibility.Visible : Visibility.Collapsed;
 
+        flag = name_err.Visibility == Visibility.Visible || email_err.Visibility == Visibility.Visible || passw_err.Visibility == Visibility.Visible;
+
+        return !flag;
+    }
 
     private void LogoutButton_Click(object sender, RoutedEventArgs e)
     {

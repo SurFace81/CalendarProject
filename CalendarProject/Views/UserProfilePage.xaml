@@ -29,8 +29,8 @@
                 <loc:ErrorTextBlockControl x:Name="name_err" Visibility="Collapsed" Text="Name must not be empty" Margin="0,2,0,20"/>
 
                 <TextBox x:Name="UserEmailTextBox" FontSize="16" IsSpellCheckEnabled="False" Header="Email:" PlaceholderText="someone@example.com" />
-                <loc:ErrorTextBlockControl x:Name="email_err" Visibility="Collapsed" Text="Email field error" Margin="0,2,0,20"/>
-                
+                <loc:ErrorTextBlockControl x:Name="email_err" Visibility="Collapsed" Text="Email must not be empty" Margin="0,2,0,20"/>
+
                 <PasswordBox x:Name="UserPasswordTextBox" FontSize="16" Header="Password:" PlaceholderText="Enter password" />
                 <loc:ErrorTextBlockControl x:Name="passw_err" Visibility="Collapsed" Text="Password must not be empty" Margin="0,2,0,20"/>
                 
