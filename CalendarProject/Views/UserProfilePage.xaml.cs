@@ -62,6 +62,9 @@ public sealed partial class UserProfilePage : Page
         dbWorker.DbAdd(newUser);
     }
 
+
+
+
     private void LogoutButton_Click(object sender, RoutedEventArgs e)
     {
         // Пустой обработчик для кнопки выхода из аккаунта
