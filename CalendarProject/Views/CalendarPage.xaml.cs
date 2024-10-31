@@ -2,7 +2,6 @@
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml;
 using System.Globalization;
-
 using CalendarProject.UserControls;
 using CalendarProject.ViewModels;
 using CalendarProject.Contracts.Services;

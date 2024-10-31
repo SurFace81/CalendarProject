@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
+using Windows.Globalization;
 
 namespace CalendarProject
 {
@@ -51,6 +52,8 @@ namespace CalendarProject
         public App()
         {
             InitializeComponent();
+
+            ApplicationLanguages.PrimaryLanguageOverride = "en-US";
 
             Host = Microsoft.Extensions.Hosting.Host.
             CreateDefaultBuilder().
@@ -146,7 +149,7 @@ namespace CalendarProject
 #if DEBUG
             await App.GetService<IActivationService>().ActivateAsync(args);
 #elif RELEASE
-            loginWindow = new LoginWindow(LaunchArgs);
+            loginWindow = new LoginWindow(args)
             loginWindow.Content = App.GetService<LoginPage>();
             loginWindow.Activate();
 #endif
