@@ -30,6 +30,8 @@ namespace CalendarProject
             get;
         }
 
+        public static LaunchActivatedEventArgs? LaunchArgs { get; private set; }
+
         public static T GetService<T>()
             where T : class
         {
@@ -95,8 +97,8 @@ namespace CalendarProject
                 services.AddSingleton<DbWorker>(provider =>
                 {
                     var dbPath = Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), 
-                        "CalendarProject", 
+                        Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                        "CalendarProject",
                         "app.db"
                     );
                     return new DbWorker(dbPath);
@@ -117,8 +119,8 @@ namespace CalendarProject
             TestDbCreator test = new TestDbCreator();
 
             dbWorker.DbAdd<User>(test.User1, test.User2, test.User3);
-            dbWorker.DbAdd<Event>(test.Event1, test.Event2, test.Event3, 
-                                  test.Event4, test.Event5, test.Event6, 
+            dbWorker.DbAdd<Event>(test.Event1, test.Event2, test.Event3,
+                                  test.Event4, test.Event5, test.Event6,
                                   test.Event7, test.Event8, test.Event9,
                                   test.Event10);
             dbWorker.DbAdd<Settings>(test.Settings1, test.Settings2, test.Settings3);
@@ -136,6 +138,7 @@ namespace CalendarProject
         protected async override void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
+            LaunchArgs = args;
 
             // Отправка уведомления при запуске
             //App.GetService<IAppNotificationService>().Show(string.Format("AppNotificationSamplePayload".GetLocalized(), AppContext.BaseDirectory));
@@ -143,7 +146,7 @@ namespace CalendarProject
 #if DEBUG
             await App.GetService<IActivationService>().ActivateAsync(args);
 #elif RELEASE
-            loginWindow = new LoginWindow(args);
+            loginWindow = new LoginWindow(LaunchArgs);
             loginWindow.Content = App.GetService<LoginPage>();
             loginWindow.Activate();
 #endif
