@@ -86,6 +86,9 @@ public sealed partial class UserProfilePage : Page
 
     private void LogoutButton_Click(object sender, RoutedEventArgs e)
     {
-        // Пустой обработчик для кнопки выхода из аккаунта
+        App.loginWindow = new LoginWindow(App.LaunchArgs);
+        App.loginWindow.Content = App.GetService<LoginPage>();
+        App.loginWindow.Activate();
+        App.MainWindow.Hide();
     }
 }
