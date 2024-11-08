@@ -1,8 +1,6 @@
 ﻿using CalendarProject.Core.Helpers;
-
 using Windows.Storage;
 using Windows.Storage.Streams;
-
 namespace CalendarProject.Helpers;
 
 // Use these extension methods to store and retrieve local and roaming app data

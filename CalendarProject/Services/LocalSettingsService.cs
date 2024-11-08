@@ -3,10 +3,7 @@ using CalendarProject.Core.Contracts.Services;
 using CalendarProject.Core.Helpers;
 using CalendarProject.Helpers;
 using CalendarProject.Models;
-
 using Microsoft.Extensions.Options;
-
-using Windows.ApplicationModel;
 using Windows.Storage;
 
 namespace CalendarProject.Services;
