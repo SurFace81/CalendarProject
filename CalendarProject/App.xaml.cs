@@ -149,7 +149,7 @@ namespace CalendarProject
 #if DEBUG
             await App.GetService<IActivationService>().ActivateAsync(args);
 #elif RELEASE
-            loginWindow = new LoginWindow(args)
+            loginWindow = new LoginWindow(args);
             loginWindow.Content = App.GetService<LoginPage>();
             loginWindow.Activate();
 #endif

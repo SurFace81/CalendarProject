@@ -27,7 +27,13 @@ namespace CalendarProject.Views
 
         private void SignButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Validate()) return;
+            if (!Validate()) return;
+
+            if (IsUserExist(emailTb.Text))
+            {
+                ShowDialog();
+                return;
+            }
 
             worker.DbAdd<User>(new User
             {
@@ -40,27 +46,45 @@ namespace CalendarProject.Views
             GoPrevPage();
         }
 
+        private async void ShowDialog()
+        {
+            ContentDialog dialog = new ContentDialog
+            {
+                Title = "Error",
+                Content = "A user with this email already exists.",
+                CloseButtonText = "OK",
+                XamlRoot = this.Content.XamlRoot
+            };
+
+            _ = await dialog.ShowAsync();
+        }
+
+        private bool IsUserExist(string email)
+        {
+            return (worker.DbExecuteSQL<User>("SELECT * FROM Users WHERE Email = @p0", email).Count > 0);
+        }
+
         private bool Validate()
         {
             name_err.Visibility = Visibility.Collapsed;
             passw_err.Visibility = Visibility.Collapsed;
             email_err.Visibility = Visibility.Collapsed;
 
-            bool flag = false;
+            bool flag = true;
             if (string.IsNullOrEmpty(nameTb.Text))
             {
                 name_err.Visibility = Visibility.Visible;
-                flag = true;
+                flag = false;
             }
             if (!SessionContext.ValidateEmail(emailTb.Text))
             {
                 email_err.Visibility = Visibility.Visible;
-                flag = true;
+                flag = false;
             }
             if (string.IsNullOrEmpty(passwTb.Password))
             {
                 passw_err.Visibility = Visibility.Visible;
-                flag = true;
+                flag = false;
             }
             return flag;
         }
