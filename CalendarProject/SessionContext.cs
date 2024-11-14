@@ -9,6 +9,7 @@ namespace CalendarProject
     {
         public static User CurrentUser { get; set; }
         public static Settings CurrentSettings { get; set; }
+        public static string StartLangId { get; set; }
 
         public static string GetMD5Hash(string input)
         {

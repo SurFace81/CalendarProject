@@ -53,8 +53,6 @@ namespace CalendarProject
         {
             InitializeComponent();
 
-            ApplicationLanguages.PrimaryLanguageOverride = "en-US";
-
             Host = Microsoft.Extensions.Hosting.Host.
             CreateDefaultBuilder().
             UseContentRoot(AppContext.BaseDirectory).
@@ -128,7 +126,15 @@ namespace CalendarProject
                                   test.Event10);
             dbWorker.DbAdd<Settings>(test.Settings1, test.Settings2, test.Settings3);
 
-            SessionContext.CurrentUser = dbWorker.DbExecuteSQL<User>("SELECT * FROM Users WHERE AutoLogin = 1").First();
+            SessionContext.CurrentUser = dbWorker.DbExecuteSQL<User>("SELECT * FROM Users").First();
+
+            SessionContext.CurrentSettings = dbWorker.DbExecuteSQL<Settings>(
+                "SELECT * FROM Settings WHERE UserId = @p0",
+                SessionContext.CurrentUser.Id
+            ).First();
+            SessionContext.StartLangId = SessionContext.CurrentSettings.LangId;
+
+            ApplicationLanguages.PrimaryLanguageOverride = SessionContext.StartLangId;  // ставим язык
 #endif
         }
 

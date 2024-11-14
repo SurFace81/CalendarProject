@@ -278,4 +278,7 @@
   <data name="noEventsMessage.Text" xml:space="preserve">
     <value>No event for this day</value>
   </data>
+  <data name="LocaleChangedInfoTxt.Text" xml:space="preserve">
+    <value>The language will change after restarting the application or re-signing into your account.</value>
+  </data>
 </root>

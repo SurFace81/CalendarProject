@@ -2,6 +2,7 @@ using CalendarProject.Contracts.Services;
 using CalendarProject.EntityFramework;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Windows.Globalization;
 
 namespace CalendarProject.Views
 {
@@ -67,7 +68,10 @@ namespace CalendarProject.Views
                 SessionContext.CurrentSettings = worker.DbExecuteSQL<Settings>(
                     "SELECT * FROM Settings WHERE UserId = @p0",
                     currUser.Id
-                ).FirstOrDefault() ?? new Settings { ThemeId = 1, LangId = 1 };
+                ).FirstOrDefault() ?? new Settings { ThemeId = 1, LangId = "en-US" };
+                SessionContext.StartLangId = SessionContext.CurrentSettings.LangId;
+
+                ApplicationLanguages.PrimaryLanguageOverride = SessionContext.StartLangId;
             }
 
             return currUser != null;

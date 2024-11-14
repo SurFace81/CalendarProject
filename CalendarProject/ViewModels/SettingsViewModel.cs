@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Windows.Input;
 using CalendarProject.Contracts.Services;
+using CalendarProject.EntityFramework;
 using CalendarProject.Helpers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -26,12 +27,19 @@ public partial class SettingsViewModel : ObservableRecipient
     [ObservableProperty]
     private bool _isRussianChecked;
 
+    [ObservableProperty]
+    private bool _isLocaleChanged;
+
     public ICommand SwitchThemeCommand { get; }
 
     public ICommand SwitchLocaleCommand { get; }
 
+    DbWorker worker;
+
     public SettingsViewModel(IThemeSelectorService themeSelectorService)
     {
+        worker = App.GetService<DbWorker>();
+
         _themeSelectorService = themeSelectorService;
         _elementTheme = _themeSelectorService.Theme;
         _versionDescription = GetVersionDescription();
@@ -63,8 +71,23 @@ public partial class SettingsViewModel : ObservableRecipient
     {
         var currentLocale = ApplicationLanguages.PrimaryLanguageOverride;
 
-        IsEnglishChecked = currentLocale == "en-US";
-        IsRussianChecked = currentLocale == "ru-RU";
+        switch (currentLocale)
+        {
+            case "en-US":
+                IsLocaleChanged = !"en-US".Equals(SessionContext.StartLangId);
+                SessionContext.CurrentSettings.LangId = "en-US";
+                IsEnglishChecked = true;
+                break;
+            case "ru":
+                IsLocaleChanged = !"ru".Equals(SessionContext.StartLangId);
+                SessionContext.CurrentSettings.LangId = "ru";
+                IsRussianChecked = true;
+                break;
+            default:
+                break;
+        }
+
+        worker.DbUpdate<Settings>(SessionContext.CurrentSettings);
     }
 
     private static string GetVersionDescription()

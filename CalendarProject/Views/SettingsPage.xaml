@@ -57,7 +57,7 @@
                     <RadioButton
                         x:Uid="Settings_Locale_Eng"
                         FontSize="15"
-                        IsChecked="{Binding IsEnglishChecked, Mode=TwoWay}"
+                        IsChecked="{x:Bind ViewModel.IsEnglishChecked, Mode=TwoWay}"
                         Command="{x:Bind ViewModel.SwitchLocaleCommand}"
                         CommandParameter="en-US"
                         GroupName="Locale">
@@ -65,12 +65,20 @@
                     <RadioButton
                         x:Uid="Settings_Locale_Rus"
                         FontSize="15"
-                        IsChecked="{Binding IsRussianChecked, Mode=TwoWay}"
+                        IsChecked="{x:Bind ViewModel.IsRussianChecked, Mode=TwoWay}"
                         Command="{x:Bind ViewModel.SwitchLocaleCommand}"
                         CommandParameter="ru-RU"
                         GroupName="Locale">
                     </RadioButton>
                 </StackPanel>
+
+                <TextBlock
+                    x:Uid="LocaleChangedInfoTxt"
+                    Visibility="{x:Bind ViewModel.IsLocaleChanged, Mode=OneWay}"
+                    Foreground="Gray"
+                    FontSize="13"
+                    Margin="{StaticResource XSmallTopMargin}"
+                    Style="{ThemeResource CaptionTextBlockStyle}" />
             </StackPanel>
 
             <TextBlock x:Uid="Settings_About" Style="{ThemeResource SubtitleTextBlockStyle}" Margin="{StaticResource MediumTopMargin}"/>

@@ -159,19 +159,19 @@ namespace CalendarProject.EntityFramework
             {
                 UserId = 1,
                 ThemeId = 1,
-                LangId = 1
+                LangId = "en-US"
             };
             Settings2 = new Settings
             {
                 UserId = 2,
                 ThemeId = 1,
-                LangId = 1
+                LangId = "ru"
             };
             Settings3 = new Settings
             {
                 UserId = 3,
                 ThemeId = 2,
-                LangId = 2
+                LangId = "en-US"
             };
         }
 

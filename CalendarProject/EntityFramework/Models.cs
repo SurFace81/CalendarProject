@@ -37,7 +37,7 @@ namespace CalendarProject.EntityFramework
         public int Id { get; set; }
         public int UserId { get; set; }
         public int ThemeId { get; set; }
-        public int LangId { get; set; }
+        public string LangId { get; set; }
 
         public User User { get; set; }
     }
