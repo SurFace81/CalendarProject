@@ -65,7 +65,7 @@
 
                             <Grid.ContextFlyout>
                                 <MenuFlyout>
-                                    <MenuFlyoutItem x:Uid="editFlyMenuItem" Icon="Edit" Click="OnEditItemClick"/>
+                                    <!--<MenuFlyoutItem x:Uid="editFlyMenuItem" Icon="Edit" Click="OnEditItemClick"/>-->
                                     <MenuFlyoutItem x:Uid="deleteFlyMenuItem" Icon="Delete" Click="OnDeleteItemClick"/>
                                 </MenuFlyout>
                             </Grid.ContextFlyout>

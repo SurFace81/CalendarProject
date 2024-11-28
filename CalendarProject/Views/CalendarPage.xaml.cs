@@ -140,7 +140,7 @@ public sealed partial class CalendarPage : Page
     {
         App.GetService<INavigationService>().NavigateTo(
             typeof(DayViewModel).FullName!,
-            parameter: new EventStartupData { Date = new DateTime(now.Year, now.Month, Convert.ToInt32((sender as CardControl)?.Text)) }
+            parameter: new EventDto { Date = new DateTime(now.Year, now.Month, Convert.ToInt32((sender as CardControl)?.Text)) }
         );
     }
 }

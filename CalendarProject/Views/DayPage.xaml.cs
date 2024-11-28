@@ -36,7 +36,7 @@ namespace CalendarProject.Views
         {
             base.OnNavigatedTo(e);
 
-            if (e.Parameter is EventStartupData esd)
+            if (e.Parameter is EventDto esd)
                 dateNow = esd.Date;
 
             datePicker.SelectedDate = dateNow;
@@ -84,13 +84,23 @@ namespace CalendarProject.Views
         {
             App.GetService<INavigationService>().NavigateTo(
                 typeof(AddEventViewModel).FullName!,
-                parameter: new EventStartupData { Date = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day) }
+                parameter: new EventDto { Date = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day) }
             );
         }
 
         private void OnEditItemClick(object sender, RoutedEventArgs e)
         {
-            // AddEvent with 'edit' flag?
+            // TODO
+            //var menuFlyoutItem = sender as MenuFlyoutItem
+            //var item = menuFlyoutItem?.DataContext as EventsListItem;
+
+            //if (item != null)
+            //{
+            //    App.GetService<INavigationService>().NavigateTo(
+            //        typeof(AddEventViewModel).FullName!,
+            //        parameter: new EventEditDto { eventForEdit = new Event { } }
+            //    );
+            //}
         }
 
         private void OnDeleteItemClick(object sender, RoutedEventArgs e)
