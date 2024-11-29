@@ -1,6 +1,5 @@
 ﻿using CalendarProject.EntityFramework;
 using CalendarProject.ViewModels;
-using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
@@ -8,87 +7,95 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
 
-namespace CalendarProject.Views;
-
-
-public sealed partial class UserProfilePage : Page
+namespace CalendarProject.Views
 {
-    private DbWorker dbWorker { get; }
-    public bool CheckBoxValue { get; private set; }
-
-    public UserProfileViewModel ViewModel
+    public sealed partial class UserProfilePage : Page
     {
-        get;
-    }
+        private DbWorker dbWorker { get; }
+        public bool CheckBoxValue { get; private set; }
 
-    public UserProfilePage()
-    {
-        ViewModel = App.GetService<UserProfileViewModel>();
-        dbWorker = App.GetService<DbWorker>();
-        InitializeComponent();
-    }
+        public UserProfileViewModel ViewModel { get; }
 
-    private void ChangeAvatarButton_Click(object sender, RoutedEventArgs e)
-    {
-        // Нужно сделать добавление картинки
-    }
-
-    private void AutoLoginCheckBox_Checked(object sender, RoutedEventArgs e)
-    {
-        bool CheckBoxValue = true;
-    }
-
-    private void AutoLoginCheckBox_Unchecked(object sender, RoutedEventArgs e)
-    {
-        bool CheckBoxValue = false;
-    }
-
-    private void SaveButton_Click(object sender, RoutedEventArgs e)
-    {
-        string name = UserNameTextBox.Text;
-        string email = UserEmailTextBox.Text;
-        string password = UserPasswordTextBox.Password;
-        bool autoLogin = CheckBoxValue;
-        int userId = SessionContext.CurrentUser.Id;
-
-        if (ValidateInput(name, email, password))
+        public UserProfilePage()
         {
-            User? userToUpdate = dbWorker.DbExecuteSQL<User>(
-                "SELECT * FROM Users WHERE Id = @p0",
-                userId
-            ).FirstOrDefault();
+            ViewModel = App.GetService<UserProfileViewModel>();
+            dbWorker = App.GetService<DbWorker>();
+            InitializeComponent();
 
-            if (userToUpdate != null)
+            if (SessionContext.CurrentUser.Logo != null)
             {
-                userToUpdate.Name = name;
-                userToUpdate.Email = email;
-                userToUpdate.Password = SessionContext.GetMD5Hash(password);
-                userToUpdate.AutoLogin = autoLogin;
-
-                dbWorker.DbUpdate(userToUpdate);
+                UserAvatar.ImageSource = new BitmapImage(new Uri(SessionContext.CurrentUser.Logo));
             }
         }
-        
-    }
 
-    private bool ValidateInput(string name, string email, string password)
-    {
-        bool flag = false;
+        private async void ChangeAvatarButton_Click(object sender, RoutedEventArgs e)
+        {
+            FileOpenPicker fop = new()
+            {
+                ViewMode = PickerViewMode.Thumbnail,
+                FileTypeFilter = { ".jpg", ".png" }
+            };
 
-        name_err.Visibility = string.IsNullOrWhiteSpace(name) ? Visibility.Visible : Visibility.Collapsed;
-        email_err.Visibility = string.IsNullOrWhiteSpace(email) || !SessionContext.ValidateEmail(email) ? Visibility.Visible : Visibility.Collapsed;
-        passw_err.Visibility = string.IsNullOrWhiteSpace(password) ? Visibility.Visible : Visibility.Collapsed;
+            nint windowHandle = WindowNative.GetWindowHandle(App.MainWindow);
+            InitializeWithWindow.Initialize(fop, windowHandle);
 
-        flag = name_err.Visibility == Visibility.Visible || email_err.Visibility == Visibility.Visible || passw_err.Visibility == Visibility.Visible;
+            StorageFile file = await fop.PickSingleFileAsync();
+            if (file != null)
+            {
+                UserAvatar.ImageSource = new BitmapImage(new Uri(file.Path));
+                SessionContext.CurrentUser.Logo = file.Path;
+                dbWorker.DbUpdate(SessionContext.CurrentUser);
+            }
+        }
 
-        return !flag;
-    }
+        private void AutoLoginCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            bool CheckBoxValue = true;
+        }
 
-    private void LogoutButton_Click(object sender, RoutedEventArgs e)
-    {
-        App.loginWindow = new LoginWindow(App.LaunchArgs);
-        App.loginWindow.Content = App.GetService<LoginPage>();
-        App.loginWindow.Activate();
-        App.MainWindow.Hide();
+        private void AutoLoginCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            bool CheckBoxValue = false;
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            string name = UserNameTextBox.Text;
+            string email = UserEmailTextBox.Text;
+            string password = UserPasswordTextBox.Password;
+            bool autoLogin = CheckBoxValue;
+            var user = SessionContext.CurrentUser;
+
+            if (ValidateInput(name, email, password))
+            {
+                user.Name = name;
+                user.Email = email;
+                user.Password = SessionContext.GetMD5Hash(password);
+                user.AutoLogin = autoLogin;
+
+                dbWorker.DbUpdate(user);
+            }
+        }
+
+        private bool ValidateInput(string name, string email, string password)
+        {
+            bool flag = false;
+
+            name_err.Visibility = string.IsNullOrWhiteSpace(name) ? Visibility.Visible : Visibility.Collapsed;
+            email_err.Visibility = string.IsNullOrWhiteSpace(email) || !SessionContext.ValidateEmail(email) ? Visibility.Visible : Visibility.Collapsed;
+            passw_err.Visibility = string.IsNullOrWhiteSpace(password) ? Visibility.Visible : Visibility.Collapsed;
+
+            flag = name_err.Visibility == Visibility.Visible || email_err.Visibility == Visibility.Visible || passw_err.Visibility == Visibility.Visible;
+
+            return !flag;
+        }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            App.loginWindow = new LoginWindow(App.LaunchArgs);
+            App.loginWindow.Content = App.GetService<LoginPage>();
+            App.loginWindow.Activate();
+            App.MainWindow.Hide();
+        }
     }
 }
