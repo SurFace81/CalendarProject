@@ -39,8 +39,7 @@ namespace CalendarProject.Views
             {
                 Name = nameTb.Text,
                 Email = emailTb.Text,
-                Password = SessionContext.GetMD5Hash(passwTb.Password),
-                AutoLogin = (bool)autoLoginCb.IsChecked!
+                Password = SessionContext.GetMD5Hash(passwTb.Password)
             });
 
             GoPrevPage();

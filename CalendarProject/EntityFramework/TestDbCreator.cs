@@ -31,7 +31,6 @@ namespace CalendarProject.EntityFramework
             User1 = new User
             {
                 Name = "Alice",
-                AutoLogin = true,
                 Email = "alice@example.com",
                 Password = GetMD5Hash("password123")
             };
@@ -39,7 +38,6 @@ namespace CalendarProject.EntityFramework
             User2 = new User
             {
                 Name = "Bob",
-                AutoLogin = false,
                 Email = "bob@example.com",
                 Password = GetMD5Hash("123")
             };
@@ -47,7 +45,6 @@ namespace CalendarProject.EntityFramework
             User3 = new User
             {
                 Name = "Charlie",
-                AutoLogin = true,
                 Email = "charlie@example.com",
                 Password = GetMD5Hash("abcdef")
             };

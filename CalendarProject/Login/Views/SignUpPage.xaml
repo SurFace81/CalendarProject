@@ -33,7 +33,6 @@
                 <local:ErrorTextBlockControl x:Name="passw_err" Visibility="Collapsed" Text="Password must not be empty"/>
             </StackPanel>
 
-            <CheckBox x:Name="autoLoginCb" Content="Autologin" Width="Auto" HorizontalAlignment="Center"/>
             <Button Content="Sign" Width="100" HorizontalAlignment="Center" Click="SignButton_Click"/>
         </StackPanel>
     </Grid>

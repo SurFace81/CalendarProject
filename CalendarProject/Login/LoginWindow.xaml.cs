@@ -14,8 +14,6 @@ namespace CalendarProject
             AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));
             Title = "AppDisplayName".GetLocalized();
 
-            //Avatar.ImageSource = new BitmapImage(new Uri(Path.Combine(AppContext.BaseDirectory, "Assets/DefaultAvatar.jpg")));
-
             LoginWindow.args = args;
         }
     }

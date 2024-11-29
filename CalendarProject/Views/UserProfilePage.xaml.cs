@@ -12,7 +12,6 @@ namespace CalendarProject.Views
     public sealed partial class UserProfilePage : Page
     {
         private DbWorker dbWorker { get; }
-        public bool CheckBoxValue { get; private set; }
 
         public UserProfileViewModel ViewModel { get; }
 
@@ -48,22 +47,11 @@ namespace CalendarProject.Views
             }
         }
 
-        private void AutoLoginCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            bool CheckBoxValue = true;
-        }
-
-        private void AutoLoginCheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            bool CheckBoxValue = false;
-        }
-
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             string name = UserNameTextBox.Text;
             string email = UserEmailTextBox.Text;
             string password = UserPasswordTextBox.Password;
-            bool autoLogin = CheckBoxValue;
             var user = SessionContext.CurrentUser;
 
             if (ValidateInput(name, email, password))
@@ -71,7 +59,6 @@ namespace CalendarProject.Views
                 user.Name = name;
                 user.Email = email;
                 user.Password = SessionContext.GetMD5Hash(password);
-                user.AutoLogin = autoLogin;
 
                 dbWorker.DbUpdate(user);
             }

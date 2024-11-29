@@ -33,8 +33,6 @@
 
                 <PasswordBox x:Name="UserPasswordTextBox" FontSize="16" Header="Password:" PlaceholderText="Enter password" />
                 <loc:ErrorTextBlockControl x:Name="passw_err" Visibility="Collapsed" Text="Password must not be empty" Margin="0,2,0,20"/>
-                
-                <CheckBox x:Name="AutoLoginCheckBox" FontSize="16" Content="AutoLogin" Width="150" Checked="AutoLoginCheckBox_Checked" Unchecked="AutoLoginCheckBox_Unchecked"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Bottom" >
