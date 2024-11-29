@@ -198,19 +198,19 @@
     <value>Ср</value>
   </data>
   <data name="EventDatePicker_tb.Text" xml:space="preserve">
-    <value>Дата события</value>
+    <value>Дата</value>
   </data>
   <data name="EventDescriptionTextBox.PlaceholderText" xml:space="preserve">
     <value>Введите описание</value>
   </data>
   <data name="EventDescription_tb.Text" xml:space="preserve">
-    <value>Описание события</value>
+    <value>Описание</value>
   </data>
   <data name="EventSave_btn.Content" xml:space="preserve">
     <value>Сохранить</value>
   </data>
   <data name="EventTimePicker_tb.Text" xml:space="preserve">
-    <value>Время события</value>
+    <value>Время</value>
   </data>
   <data name="NotifTime_cb1.Content" xml:space="preserve">
     <value>5 минут</value>
@@ -225,16 +225,16 @@
     <value>30 минут</value>
   </data>
   <data name="NotifTime_cb5.Content" xml:space="preserve">
-    <value>1 час</value>
+    <value>1  час</value>
   </data>
   <data name="NotifTime_cb6.Content" xml:space="preserve">
-    <value>2 часа</value>
+    <value>2  часа</value>
   </data>
   <data name="NotifTime_cb7.Content" xml:space="preserve">
     <value>1 день</value>
   </data>
   <data name="notify_tb.Text" xml:space="preserve">
-    <value>Уведомить за</value>
+    <value>Уведомить через</value>
   </data>
   <data name="priorityType_High.Content" xml:space="preserve">
     <value>Высокий</value>
@@ -277,5 +277,50 @@
   </data>
   <data name="noEventsMessage.Text" xml:space="preserve">
     <value>Нет событий на этот день</value>
+  </data>
+  <data name="LocaleChangedInfoTxt.Text" xml:space="preserve">
+    <value>Язык будет сменен после  перезапуска приложения</value>
+  </data>
+  <data name="EventTitle_tb.Text" xml:space="preserve">
+    <value>Заголовок</value>
+  </data>
+  <data name="NotificationCb.Content" xml:space="preserve">
+    <value>Уведомить</value>
+  </data>
+  <data name="ChangeAvatarBtn.Content" xml:space="preserve">
+    <value>Сменить аватар</value>
+  </data>
+  <data name="UserNameTb.Header" xml:space="preserve">
+    <value>Имя:</value>
+  </data>
+  <data name="UserEmailTb.Header" xml:space="preserve">
+    <value>Email:</value>
+  </data>
+  <data name="UserPasswordTb.Header" xml:space="preserve">
+    <value>Пароль:</value>
+  </data>
+  <data name="UserNameTb.PlaceholderText" xml:space="preserve">
+    <value>Введите имя</value>
+  </data>
+  <data name="UserPasswordTb.PlaceholderText" xml:space="preserve">
+    <value>Введите пароль</value>
+  </data>
+  <data name="UserNameTbError.Text" xml:space="preserve">
+    <value>Имя не может быть пустым</value>
+  </data>
+  <data name="UserEmailTbError.Text" xml:space="preserve">
+    <value>Email не может быть пустым</value>
+  </data>
+  <data name="UserPasswordTbError.Text" xml:space="preserve">
+    <value>Пароль не может быть пустым</value>
+  </data>
+  <data name="SaveBtn.Content" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="LogOutBtn.Content" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+  <data name="EventTitleTb.PlaceholderText" xml:space="preserve">
+    <value>Введите заголовок</value>
   </data>
 </root>

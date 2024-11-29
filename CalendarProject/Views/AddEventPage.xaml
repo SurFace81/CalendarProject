@@ -22,8 +22,8 @@
 
             <!-- Левая часть: Заголовок, Дата и Время -->
             <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,10,0,0">
-                <TextBlock Text="Event Title" FontSize="18"/>
-                <TextBox x:Name="EventTitleTextBox" Margin="0,10,0,20" PlaceholderText="Enter event title" />
+                <TextBlock x:Uid="EventTitle_tb" FontSize="18"/>
+                <TextBox x:Name="EventTitleTextBox" x:Uid="EventTitleTb" Margin="0,10,0,20"/>
                 
                 <TextBlock x:Uid="EventDatePicker_tb" FontSize="18"/>
                 <DatePicker x:Name="EventDatePicker" Margin="0,10,0,20"/>
@@ -41,7 +41,7 @@
                     <ComboBoxItem x:Uid="priorityType_High"/>
                 </ComboBox>
 
-                <CheckBox x:Name="NotificationCheckBox" Content="Notification" Width="150" Checked="NotificationCheckBox_Checked" Unchecked="NotificationCheckBox_Unchecked" Margin="0,10,0,20"/>
+                <CheckBox x:Name="NotificationCheckBox" x:Uid="NotificationCb" Width="150" Checked="NotificationCheckBox_Checked" Unchecked="NotificationCheckBox_Unchecked" Margin="0,10,0,20"/>
                 <StackPanel x:Name="NotificationTimePanel" Visibility="Collapsed">
                     <TextBlock x:Uid="notify_tb" FontSize="18"/>
                     <ComboBox x:Name="NotificationTimeComboBox" Width="150" Margin="0,10,0,20">

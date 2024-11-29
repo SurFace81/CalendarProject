@@ -15,15 +15,17 @@ namespace CalendarProject.Views
 
         public UserProfileViewModel ViewModel { get; }
 
+        private static string logoPath;
+
         public UserProfilePage()
         {
             ViewModel = App.GetService<UserProfileViewModel>();
             dbWorker = App.GetService<DbWorker>();
             InitializeComponent();
 
-            if (SessionContext.CurrentUser.Logo != null)
+            if (logoPath != null)
             {
-                UserAvatar.ImageSource = new BitmapImage(new Uri(SessionContext.CurrentUser.Logo));
+                UserAvatar.ImageSource = new BitmapImage(new Uri(logoPath));
             }
         }
 
@@ -41,9 +43,8 @@ namespace CalendarProject.Views
             StorageFile file = await fop.PickSingleFileAsync();
             if (file != null)
             {
-                UserAvatar.ImageSource = new BitmapImage(new Uri(file.Path));
-                SessionContext.CurrentUser.Logo = file.Path;
-                dbWorker.DbUpdate(SessionContext.CurrentUser);
+                logoPath = file.Path;
+                UserAvatar.ImageSource = new BitmapImage(new Uri(logoPath));
             }
         }
 
@@ -59,6 +60,7 @@ namespace CalendarProject.Views
                 user.Name = name;
                 user.Email = email;
                 user.Password = SessionContext.GetMD5Hash(password);
+                user.Logo = logoPath;
 
                 dbWorker.DbUpdate(user);
             }

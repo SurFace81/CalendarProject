@@ -30,13 +30,13 @@
 
             <StackPanel Orientation="Vertical" Width="300">
                 <TextBlock Text="Email" FontSize="16" Margin="0,5,0,0"/>
-                <TextBox x:Name="emailText" IsSpellCheckEnabled="false" PlaceholderText="someone@example.com" Margin="0,10,0,0"/>
+                <TextBox x:Name="emailText" KeyDown="login_KeyDown" IsSpellCheckEnabled="false" PlaceholderText="someone@example.com" Margin="0,10,0,0"/>
                 <local:ErrorTextBlockControl x:Name="email_err" Text="Email field error"/>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Width="300">
                 <TextBlock Text="Password" FontSize="16" Margin="0,5,0,0"/>
-                <PasswordBox x:Name="passwText" PlaceholderText="Enter your password" Margin="0,10,0,0"/>
+                <PasswordBox x:Name="passwText" KeyDown="login_KeyDown" PlaceholderText="Enter your password" Margin="0,10,0,0"/>
                 <local:ErrorTextBlockControl x:Name="passw_err" Text="Password must not be empty"/>
             </StackPanel>
 
@@ -44,7 +44,6 @@
             <HyperlinkButton Content="Sign up" HorizontalAlignment="Center" FontSize="12" Margin="0,-10,0,-15" Click="SignUpButton_Click"/>
             <HyperlinkButton Content="Forgot password?" HorizontalAlignment="Center" FontSize="12" Click="ForgotButton_Click"/>
             <!--<local:ErrorTextBlockControl x:Name="userNotFoundMsg" Visibility="Collapsed" HorizontalAlignment="Center" Text="User not found"/>-->
-
         </StackPanel>
     </Grid>
 </Page>

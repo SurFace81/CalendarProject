@@ -281,4 +281,46 @@
   <data name="LocaleChangedInfoTxt.Text" xml:space="preserve">
     <value>The language will change after restarting the application or re-signing into your account.</value>
   </data>
+  <data name="EventTitle_tb.Text" xml:space="preserve">
+    <value>Event Title</value>
+  </data>
+  <data name="NotificationCb.Content" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="ChangeAvatarBtn.Content" xml:space="preserve">
+    <value>Change avatar</value>
+  </data>
+  <data name="UserNameTb.Header" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="UserEmailTb.Header" xml:space="preserve">
+    <value>Email:</value>
+  </data>
+  <data name="UserPasswordTb.Header" xml:space="preserve">
+    <value>Password:</value>
+  </data>
+  <data name="UserNameTb.PlaceholderText" xml:space="preserve">
+    <value>Enter name</value>
+  </data>
+  <data name="UserPasswordTb.PlaceholderText" xml:space="preserve">
+    <value>Enter password</value>
+  </data>
+  <data name="UserNameTbError.Text" xml:space="preserve">
+    <value>Name must not be empty</value>
+  </data>
+  <data name="UserEmailTbError.Text" xml:space="preserve">
+    <value>Email must not be empty</value>
+  </data>
+  <data name="UserPasswordTbError.Text" xml:space="preserve">
+    <value>Password must not be empty</value>
+  </data>
+  <data name="SaveBtn.Content" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="LogOutBtn.Content" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="EventTitleTb.PlaceholderText" xml:space="preserve">
+    <value>Enter event title</value>
+  </data>
 </root>

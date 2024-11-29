@@ -21,23 +21,23 @@
 
             <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Spacing="20" VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Center" Width="250">
                 <loc:AvatarControl x:Name="UserAvatar" Size="220"/>
-                <Button Content="Change Avatar" HorizontalAlignment="Stretch" Height="35" Click="ChangeAvatarButton_Click"/>
+                <Button x:Uid="ChangeAvatarBtn" HorizontalAlignment="Stretch" Height="35" Click="ChangeAvatarButton_Click"/>
             </StackPanel>
 
             <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="250">
-                <TextBox x:Name="UserNameTextBox" FontSize="16" Header="Name:" IsSpellCheckEnabled="False" PlaceholderText="Enter name" />
-                <loc:ErrorTextBlockControl x:Name="name_err" Visibility="Collapsed" Text="Name must not be empty" Margin="0,2,0,20"/>
+                <TextBox x:Name="UserNameTextBox" x:Uid="UserNameTb" FontSize="16" IsSpellCheckEnabled="False"/>
+                <loc:ErrorTextBlockControl x:Name="name_err" x:Uid="UserNameTbError" Visibility="Collapsed" Margin="0,2,0,20"/>
 
-                <TextBox x:Name="UserEmailTextBox" FontSize="16" IsSpellCheckEnabled="False" Header="Email:" PlaceholderText="someone@example.com" />
-                <loc:ErrorTextBlockControl x:Name="email_err" Visibility="Collapsed" Text="Email must not be empty" Margin="0,2,0,20"/>
+                <TextBox x:Name="UserEmailTextBox" x:Uid="UserEmailTb" FontSize="16" IsSpellCheckEnabled="False" PlaceholderText="someone@example.com" />
+                <loc:ErrorTextBlockControl x:Name="email_err" x:Uid="UserEmailTbError" Visibility="Collapsed" Margin="0,2,0,20"/>
 
-                <PasswordBox x:Name="UserPasswordTextBox" FontSize="16" Header="Password:" PlaceholderText="Enter password" />
-                <loc:ErrorTextBlockControl x:Name="passw_err" Visibility="Collapsed" Text="Password must not be empty" Margin="0,2,0,20"/>
+                <PasswordBox x:Name="UserPasswordTextBox" x:Uid="UserPasswordTb" FontSize="16"/>
+                <loc:ErrorTextBlockControl x:Name="passw_err" x:Uid="UserPasswordTbError" Visibility="Collapsed" Margin="0,2,0,20"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Bottom" >
-                <Button Content="Save" Width="150" Height="35" Margin="10" Click="SaveButton_Click"/>
-                <Button Content="Log out" Width="150" Height="35" Margin="10" Click="LogoutButton_Click"/>
+                <Button x:Uid="SaveBtn" Width="150" Height="35" Margin="10" Click="SaveButton_Click"/>
+                <Button x:Uid="LogOutBtn"  Width="150" Height="35" Margin="10" Click="LogoutButton_Click"/>
             </StackPanel>
         </Grid>
     </ScrollViewer>

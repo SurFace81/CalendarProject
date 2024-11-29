@@ -19,7 +19,21 @@ namespace CalendarProject.Views
             worker = App.GetService<DbWorker>();
         }
 
-        private async void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void login_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                Login();
+                e.Handled = true;
+            }
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            Login();
+        }
+
+        private async void Login()
         {
             if (SessionContext.ValidatePassword(passwText.Password) && SessionContext.ValidateEmail(emailText.Text))
             {
