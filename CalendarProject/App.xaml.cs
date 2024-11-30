@@ -3,23 +3,22 @@ using CalendarProject.Contracts.Services;
 using CalendarProject.Core.Contracts.Services;
 using CalendarProject.Core.Services;
 using CalendarProject.EntityFramework;
-using CalendarProject.Helpers;
 using CalendarProject.Models;
 using CalendarProject.Notifications;
 using CalendarProject.Services;
 using CalendarProject.ViewModels;
 using CalendarProject.Views;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 using Windows.Globalization;
+using System.Windows.Forms;
 
 namespace CalendarProject
 {
 
     // To learn more about WinUI 3, see https://docs.microsoft.com/windows/apps/winui/winui3/.
-    public partial class App : Application
+    public partial class App : Microsoft.UI.Xaml.Application
     {
         // The .NET Generic Host provides dependency injection, configuration, logging, and other services.
         // https://docs.microsoft.com/dotnet/core/extensions/generic-host
@@ -48,6 +47,10 @@ namespace CalendarProject
         public static WindowEx loginWindow { get; set; }
 
         public static UIElement? AppTitlebar { get; set; }
+
+        private NotifyIcon? _trayIcon;
+        private ContextMenuStrip? _trayMenu;
+        private bool isClosingApp = false;
 
         public App()
         {
@@ -104,15 +107,19 @@ namespace CalendarProject
                     );
                     return new DbWorker(dbPath);
                 });
+                services.AddSingleton<BgNotificationService>();
 
                 // Configuration
                 services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
             }).
             Build();
 
+            App.GetService<BgNotificationService>().isStarted = true;
             App.GetService<IAppNotificationService>().Initialize();
 
             UnhandledException += App_UnhandledException;
+
+            InitializeTray();
 
 #if DEBUG
             var dbWorker = App.GetService<DbWorker>();
@@ -138,9 +145,37 @@ namespace CalendarProject
 #endif
         }
 
-        private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
-        { 
-            e.Handled = true;
+        private void InitializeTray()
+        {
+            _trayIcon = new System.Windows.Forms.NotifyIcon()
+            {
+                Icon = new System.Drawing.Icon(Path.Combine(AppContext.BaseDirectory, "Assets", "WindowIcon.ico")),
+                Visible = false,
+                Text = "CalendarProject"
+            };
+
+            _trayMenu = new ContextMenuStrip();
+            _trayMenu.Items.Add("Показать");
+            _trayMenu.Items.Add("Выход");
+            _trayMenu.ItemClicked += (o, e) =>
+            {
+                _trayIcon.Visible = false;
+                switch (e.ClickedItem?.Text)
+                {
+                    case "Показать":
+                        MainWindow.Show();
+                        MainWindow.Activate();
+                        break;
+                    case "Выход":
+                        isClosingApp = true;
+                        App.Current.Exit();
+                        break;
+                    default:
+                        break;
+                }
+            };
+
+            _trayIcon.ContextMenuStrip = _trayMenu;
         }
 
         protected async override void OnLaunched(LaunchActivatedEventArgs args)
@@ -148,9 +183,7 @@ namespace CalendarProject
             base.OnLaunched(args);
             LaunchArgs = args;
 
-            // Отправка уведомления при запуске
-            //App.GetService<IAppNotificationService>().Show(string.Format("AppNotificationSamplePayload".GetLocalized(), AppContext.BaseDirectory));
-
+            MainWindow.Closed += MainWindow_Closed;
 #if DEBUG
             await App.GetService<IActivationService>().ActivateAsync(args);
 #elif RELEASE
@@ -158,6 +191,21 @@ namespace CalendarProject
             loginWindow.Content = App.GetService<LoginPage>();
             loginWindow.Activate();
 #endif
+        }
+
+        private void MainWindow_Closed(object sender, WindowEventArgs args)
+        {
+            args.Handled = !isClosingApp;
+            if (_trayIcon != null && !isClosingApp)
+            {
+                _trayIcon.Visible = true;
+                MainWindow.Hide();
+            }            
+        }
+
+        private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }
