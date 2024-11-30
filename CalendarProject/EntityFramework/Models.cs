@@ -31,6 +31,15 @@ namespace CalendarProject.EntityFramework
         public User User { get; set; }
     }
 
+    public class Notification
+    {
+        public int Id { get; set; }
+        public int EventId { get; set; }
+        public DateTime NotifDateTime { get; set; }
+
+        public Event Event { get; set; }
+    }
+
     public class Settings
     {
         public int Id { get; set; }

@@ -16,19 +16,9 @@ using System.Windows.Forms;
 
 namespace CalendarProject
 {
-
-    // To learn more about WinUI 3, see https://docs.microsoft.com/windows/apps/winui/winui3/.
     public partial class App : Microsoft.UI.Xaml.Application
     {
-        // The .NET Generic Host provides dependency injection, configuration, logging, and other services.
-        // https://docs.microsoft.com/dotnet/core/extensions/generic-host
-        // https://docs.microsoft.com/dotnet/core/extensions/dependency-injection
-        // https://docs.microsoft.com/dotnet/core/extensions/configuration
-        // https://docs.microsoft.com/dotnet/core/extensions/logging
-        public IHost Host
-        {
-            get;
-        }
+        public IHost Host { get; }
 
         public static LaunchActivatedEventArgs? LaunchArgs { get; private set; }
 
@@ -43,12 +33,12 @@ namespace CalendarProject
             return service;
         }
 
-        public static WindowEx MainWindow { get; } = new MainWindow();
+        public static WindowEx MainWindow { get; set; }
         public static WindowEx loginWindow { get; set; }
 
         public static UIElement? AppTitlebar { get; set; }
 
-        private NotifyIcon? _trayIcon;
+        public static NotifyIcon? _trayIcon { get; set; }
         private ContextMenuStrip? _trayMenu;
         private bool isClosingApp = false;
 
@@ -114,7 +104,6 @@ namespace CalendarProject
             }).
             Build();
 
-            App.GetService<BgNotificationService>().isStarted = true;
             App.GetService<IAppNotificationService>().Initialize();
 
             UnhandledException += App_UnhandledException;
@@ -143,6 +132,8 @@ namespace CalendarProject
 
             ApplicationLanguages.PrimaryLanguageOverride = SessionContext.StartLangId;  // ставим язык
 #endif
+            App.GetService<BgNotificationService>().Initialize();
+            App.GetService<BgNotificationService>().Start();
         }
 
         private void InitializeTray()
@@ -183,6 +174,7 @@ namespace CalendarProject
             base.OnLaunched(args);
             LaunchArgs = args;
 
+            MainWindow = new MainWindow();
             MainWindow.Closed += MainWindow_Closed;
 #if DEBUG
             await App.GetService<IActivationService>().ActivateAsync(args);

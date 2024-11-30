@@ -1,71 +1,75 @@
 ﻿using System.Collections.Specialized;
 using System.Web;
-
 using CalendarProject.Contracts.Services;
-using CalendarProject.ViewModels;
-
 using Microsoft.Windows.AppNotifications;
 
-namespace CalendarProject.Notifications;
-
-public class AppNotificationService : IAppNotificationService
+namespace CalendarProject.Notifications
 {
-    private readonly INavigationService _navigationService;
 
-    public AppNotificationService(INavigationService navigationService)
+    public class AppNotificationService : IAppNotificationService
     {
-        _navigationService = navigationService;
-    }
+        private readonly INavigationService _navigationService;
 
-    ~AppNotificationService()
-    {
-        Unregister();
-    }
-
-    public void Initialize()
-    {
-        AppNotificationManager.Default.NotificationInvoked += OnNotificationInvoked;
-
-        AppNotificationManager.Default.Register();
-    }
-
-    public void OnNotificationInvoked(AppNotificationManager sender, AppNotificationActivatedEventArgs args)
-    {
-        // TODO: Handle notification invocations when your app is already running.
-
-        //// // Navigate to a specific page based on the notification arguments.
-        //// if (ParseArguments(args.Argument)["action"] == "Settings")
-        //// {
-        ////    App.MainWindow.DispatcherQueue.TryEnqueue(() =>
-        ////    {
-        ////        _navigationService.NavigateTo(typeof(SettingsViewModel).FullName!);
-        ////    });
-        //// }
-
-        App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+        public AppNotificationService(INavigationService navigationService)
         {
-            App.MainWindow.ShowMessageDialogAsync("TODO: Handle notification invocations when your app is already running.", "Notification Invoked");
+            _navigationService = navigationService;
+        }
 
-            App.MainWindow.BringToFront();
-        });
-    }
+        ~AppNotificationService()
+        {
+            Unregister();
+        }
 
-    public bool Show(string payload)
-    {
-        var appNotification = new AppNotification(payload);
+        public void Initialize()
+        {
+            AppNotificationManager.Default.NotificationInvoked += OnNotificationInvoked;
+            AppNotificationManager.Default.Register();
+        }
 
-        AppNotificationManager.Default.Show(appNotification);
+        public void OnNotificationInvoked(AppNotificationManager sender, AppNotificationActivatedEventArgs args)
+        {
+            App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                App.MainWindow.Show();
+                if (App._trayIcon != null)
+                {
+                    App._trayIcon.Visible = false;
+                }
+                Dictionary<string, string> arg = ParseArguments(args);
+                App.MainWindow.ShowMessageDialogAsync(arg["descr"], arg["header"]);
+                App.MainWindow.BringToFront();
+            });
+        }
 
-        return appNotification.Id != 0;
-    }
+        private Dictionary<string, string> ParseArguments(AppNotificationActivatedEventArgs args)
+        {
+            var res = new Dictionary<string, string>();
 
-    public NameValueCollection ParseArguments(string arguments)
-    {
-        return HttpUtility.ParseQueryString(arguments);
-    }
+            foreach (var pair in args.Argument.Split(';'))
+            {
+                res.Add(pair.Split('=')[0], pair.Split('=')[1]);
+            }
 
-    public void Unregister()
-    {
-        AppNotificationManager.Default.Unregister();
+            return res;
+        }
+
+        public bool Show(string payload)
+        {
+            var appNotification = new AppNotification(payload);
+
+            AppNotificationManager.Default.Show(appNotification);
+
+            return appNotification.Id != 0;
+        }
+
+        public NameValueCollection ParseArguments(string arguments)
+        {
+            return HttpUtility.ParseQueryString(arguments);
+        }
+
+        public void Unregister()
+        {
+            AppNotificationManager.Default.Unregister();
+        }
     }
 }
