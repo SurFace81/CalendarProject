@@ -1,5 +1,6 @@
 using CalendarProject.Contracts.Services;
 using CalendarProject.EntityFramework;
+using CalendarProject.Services;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Globalization;
@@ -9,6 +10,7 @@ namespace CalendarProject.Views
     public sealed partial class LoginPage : Page
     {
         private DbWorker worker;
+        private BgNotificationService notificationService;
 
         public LoginPage()
         {
@@ -17,6 +19,7 @@ namespace CalendarProject.Views
             email_err.Visibility = Visibility.Collapsed;
 
             worker = App.GetService<DbWorker>();
+            notificationService = App.GetService<BgNotificationService>();
         }
 
         private void login_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -41,6 +44,9 @@ namespace CalendarProject.Views
                 {
                     emailText.ClearValue(Control.StyleProperty);
                     passwText.ClearValue(Control.StyleProperty);
+
+                    notificationService.Initialize();
+                    notificationService.Start();
 
                     await App.GetService<IActivationService>().ActivateAsync(LoginWindow.args);
 

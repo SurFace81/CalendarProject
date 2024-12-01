@@ -36,7 +36,7 @@ namespace CalendarProject.Notifications
                     App._trayIcon.Visible = false;
                 }
                 Dictionary<string, string> arg = ParseArguments(args);
-                App.MainWindow.ShowMessageDialogAsync(arg["descr"], arg["header"]);
+                App.MainWindow.ShowMessageDialogAsync(arg["descr"], arg["header"] + " - " + arg["time"]);
                 App.MainWindow.BringToFront();
             });
         }

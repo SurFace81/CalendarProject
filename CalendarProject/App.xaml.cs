@@ -107,9 +107,6 @@ namespace CalendarProject
             App.GetService<IAppNotificationService>().Initialize();
 
             UnhandledException += App_UnhandledException;
-
-            InitializeTray();
-
 #if DEBUG
             var dbWorker = App.GetService<DbWorker>();
 
@@ -131,9 +128,9 @@ namespace CalendarProject
             SessionContext.StartLangId = SessionContext.CurrentSettings.LangId;
 
             ApplicationLanguages.PrimaryLanguageOverride = SessionContext.StartLangId;  // ставим язык
-#endif
             App.GetService<BgNotificationService>().Initialize();
             App.GetService<BgNotificationService>().Start();
+#endif
         }
 
         private void InitializeTray()
@@ -183,6 +180,7 @@ namespace CalendarProject
             loginWindow.Content = App.GetService<LoginPage>();
             loginWindow.Activate();
 #endif
+            InitializeTray();
         }
 
         private void MainWindow_Closed(object sender, WindowEventArgs args)

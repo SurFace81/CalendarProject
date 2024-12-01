@@ -55,7 +55,7 @@ namespace CalendarProject.EntityFramework
                 UserId = 1,
                 Time = new DateTime(2024, 10, 5, 10, 0, 0),
                 Date = new DateTime(2024, 10, 14),
-                NotifTime = new DateTime(2024, 11, 30, 16, 53, 0),
+                NotifTime = new DateTime(2024, 11, 30, 22, 14, 0),
                 Header = "Team Meeting",
                 Description = "Discuss project updates.",
                 Priority = 1

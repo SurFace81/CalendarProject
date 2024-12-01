@@ -32,6 +32,8 @@ namespace CalendarProject.EntityFramework
         {
             DbContext.AddRange(items);
             DbContext.SaveChanges();
+
+            DbAdded?.Invoke(this, items);
         }
 
         /// <summary>
@@ -44,6 +46,8 @@ namespace CalendarProject.EntityFramework
             {
                 DbContext.Set<T>().Remove(item);
                 DbContext.SaveChanges();
+
+                DbDeleted?.Invoke(this, item);
             }
         }
 
@@ -54,6 +58,8 @@ namespace CalendarProject.EntityFramework
         {
             DbContext.Set<T>().Update(item);
             DbContext.SaveChanges();
+
+            DbUpdated?.Invoke(this, item);
         }
 
         /// <summary>
@@ -71,5 +77,9 @@ namespace CalendarProject.EntityFramework
         {
             return DbContext.Set<T>().FromSqlRaw(query, parameters).ToList();
         }
+
+        public event EventHandler<object> DbAdded;
+        public event EventHandler<object> DbDeleted;
+        public event EventHandler<object> DbUpdated;
     }
 }

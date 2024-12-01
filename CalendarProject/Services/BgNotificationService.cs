@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using CalendarProject.Contracts.Services;
-using CalendarProject.Helpers;
 using CalendarProject.EntityFramework;
 
 namespace CalendarProject.Services
@@ -13,64 +12,96 @@ namespace CalendarProject.Services
     internal class BgNotificationService
     {
         public bool isStarted { get; private set; }
-        public Dictionary<DateTime, Event> notifDict { get; private set; }
-
-        private List<Timer> _timers = new List<Timer>();
+        private Dictionary<DateTime, Event> notifsDict = new Dictionary<DateTime, Event>();
+        private Dictionary<int, Timer> timersDict = new Dictionary<int, Timer>();
         private DbWorker dbWorker;
 
         public void Initialize()
         {
             dbWorker = App.GetService<DbWorker>();
-            notifDict = new Dictionary<DateTime, Event>();
-            InflateNotifDict();
+            dbWorker.DbDeleted += DbWorker_DbDeleted;
+            dbWorker.DbAdded += DbWorker_DbAdded;
+
+            InflateNotifs();
             InflateTimers();
         }
 
-        private void InflateNotifDict()
+        private void InflateNotifs()
         {
             foreach (var item in dbWorker.DbExecuteSQL<Event>(
                 "SELECT * FROM Events WHERE UserId = @p0",
-                SessionContext.CurrentUser.Id))
+                SessionContext.CurrentUser.Id)
+            )
             {
-                if (item.NotifTime != null)
-                {
-                    notifDict.Add(item.NotifTime.Value, item);
-                }
+                AddNotif(item);
             };
         }
 
         private void InflateTimers()
         {
-            foreach (var k in notifDict.Keys)
+            foreach (var k in notifsDict.Keys)
             {
-                TimeSpan dueTime = notifDict[k].NotifTime!.Value - DateTime.Now;
+                AddTimer(notifsDict[k]);
+            }
+        }
+
+        private void AddNotif(Event item)
+        {
+            if (item.NotifTime != null)
+            {
+                notifsDict.Add(item.NotifTime.Value, item);
+            }
+        }
+
+        private void AddTimer(Event item)
+        {
+            if (item.NotifTime != null)
+            {
+                TimeSpan dueTime = (DateTime)item.NotifTime - DateTime.Now;
                 if (dueTime > TimeSpan.Zero)
                 {
-                    _timers.Add(new Timer(Callback, k, dueTime, Timeout.InfiniteTimeSpan));
-                }                
+                    timersDict.Add(item.Id, new Timer(Callback, item, dueTime, Timeout.InfiniteTimeSpan));
+                }
+            }
+        }
+
+        private void DeleteNotif(Event item)
+        {
+            if (item.NotifTime != null && notifsDict.ContainsKey(item.NotifTime.Value))
+            {
+                notifsDict.Remove(item.NotifTime.Value);
+            }
+        }
+
+        private void DeleteTimer(Event item)
+        {
+            if (timersDict.ContainsKey(item.Id))
+            {
+                timersDict.Remove(item.Id);
             }
         }
 
         private void Callback(object? state)
         {
-            if (isStarted && state is DateTime time)
+            if (isStarted && state is Event eventItem)
             {
-                var eventItem = notifDict[time];
                 string notification = string.Format(
                     "<toast launch=\"action=ToastClick\">" +
                     "   <visual> " +
                     "       <binding template=\"ToastGeneric\">" +
                     "           <text>{0}</text>" +
                     "           <text>{1}</text>" +
-                    "           <image placement=\"appLogoOverride\" hint-crop=\"circle\" src=\"{2}Assets/WindowIcon.ico\"/>" +
+                    "           <image placement=\"appLogoOverride\" hint-crop=\"circle\" src=\"{3}Assets/WindowIcon.ico\"/>" +
                     "       </binding>" +
                     "   </visual>" +
+                    "   <audio src=\"ms-winsoundevent:Notification.Reminder\"/>\"" +
                     "   <actions>" +
-                    "       <action content=\"View\" arguments=\"header={0};descr={1}\"/>" +
+                    "       <action content=\"View\" arguments=\"header={0};descr={1};time={2}\"/>" +
                     "   </actions>" +
                     "</toast>",
                     eventItem.Header,
                     eventItem.Description,
+                    eventItem.Time.ToString(),
                     AppContext.BaseDirectory
                 );
 
@@ -81,5 +112,26 @@ namespace CalendarProject.Services
         public void Start() => isStarted = true;
 
         public void Stop() => isStarted = false;
+
+        private void DbWorker_DbAdded(object? sender, object e)
+        {
+            if (e is Event[] events)
+            {
+                foreach (var @event in events) if (@event.NotifTime != null)
+                {
+                    AddNotif(@event);
+                    AddTimer(@event);
+                }
+            }
+        }
+
+        private void DbWorker_DbDeleted(object? sender, object e)
+        {
+            if (e is Event @event)
+            {
+                DeleteNotif(@event);
+                DeleteTimer(@event);
+            }
+        }
     }
 }

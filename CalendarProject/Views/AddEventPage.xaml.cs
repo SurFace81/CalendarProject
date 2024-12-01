@@ -13,17 +13,12 @@ namespace CalendarProject.Views
     {
         private DbWorker dbWorker { get; }
 
-
-        public AddEventViewModel ViewModel
-        {
-            get;
-        }
+        public AddEventViewModel ViewModel { get; }
 
         public AddEventPage()
         {
             this.InitializeComponent();
             dbWorker = App.GetService<DbWorker>();
-
         }
 
         private void NotificationCheckBox_Checked(object sender, RoutedEventArgs e)
@@ -94,6 +89,5 @@ namespace CalendarProject.Views
 
             return eventDateTime.AddMinutes(-minutesBeforeEvent);
         }
-
     }
 }

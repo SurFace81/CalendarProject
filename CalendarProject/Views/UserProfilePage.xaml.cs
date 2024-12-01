@@ -27,6 +27,8 @@ namespace CalendarProject.Views
             {
                 UserAvatar.ImageSource = new BitmapImage(new Uri(logoPath));
             }
+            UserNameTextBox.Text = SessionContext.CurrentUser.Name;
+            UserEmailTextBox.Text = SessionContext.CurrentUser.Email;
         }
 
         private async void ChangeAvatarButton_Click(object sender, RoutedEventArgs e)

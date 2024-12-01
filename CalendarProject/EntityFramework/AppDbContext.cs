@@ -13,7 +13,6 @@ namespace CalendarProject.EntityFramework
         public DbSet<User> Users { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Settings> Settings { get; set; }
-        public DbSet<Notification> Notifications { get; set; }
 
         private readonly string path;
 
