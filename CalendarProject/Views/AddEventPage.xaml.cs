@@ -44,7 +44,7 @@ namespace CalendarProject.Views
                 "Low" => 1,
                 "Medium" => 2,
                 "High" => 3,
-                _ => 0
+                _ => 1
             };
 
             DateTime? NotifTime = null;
